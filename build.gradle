@@ -1,0 +1,104 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.5.4"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.2"
+    }
+}
+
+ext.junit4Version = '4.12'
+ext.junitVintageVersion = '4.12.2'
+ext.junitPlatformVersion = '1.0.2'
+ext.junitJupiterVersion = '5.0.2'
+ext.lombokVersion = '1.16.18'
+ext.slf4jVersion = '1.2.3'
+ext.logbackVersion = '1.2.3'
+
+subprojects {
+    group "com.infinera.metro.dnam.test.acceptance"
+    version "1.0"
+
+    apply plugin: 'idea'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java'
+    apply plugin: "com.jfrog.artifactory"
+    apply plugin: 'org.junit.platform.gradle.plugin'
+
+    compileJava {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+        options.encoding = 'UTF-8'
+    }
+
+    junitPlatform {
+        reportsDir file('build/test-results/junit-platform')
+    }
+
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://se-artif-prd.infinera.com/artifactory/repo"
+            credentials {
+                username = "tnmbuild"
+                password = "APGLa2kNd3Da4vLTKo6uWuMcdH"
+            }
+        }
+    }
+
+    dependencies {
+        compile "org.slf4j:slf4j-api:${slf4jVersion}"
+        compile "ch.qos.logback:logback-classic:${logbackVersion}"
+        compile "org.projectlombok:lombok:${lombokVersion}"
+
+        testCompile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
+        testRuntime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
+
+        testCompileOnly "org.apiguardian:apiguardian-api:1.0.0"
+
+        testCompile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
+        testCompile "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
+        testCompile "org.junit.platform:junit-platform-console-standalone:${junitPlatformVersion}"
+    }
+}
+
+
+project(':1-test-impl-layer') {
+
+    task copyTestRuntimeLibs(type: Copy) {
+        dependsOn build
+        from configurations.testRuntime
+        into "build/libs"
+    }
+
+//    task testJar(type: org.gradle.jvm.tasks.Jar, dependsOn: copyTestRuntimeLibs) {
+//        baseName = 'dnam-functional-acceptance-tests'
+//        version = project.version
+//        manifest {
+//            attributes 'Implementation-Title': 'dnam-functional-acceptance-tests',
+//                    'Implementation-Version': project.version
+//        }
+//        from sourceSets.test.output
+//    }
+
+//    build.finalizedBy(testJar)
+    build.finalizedBy(copyTestRuntimeLibs)
+
+    dependencies {
+        compile project(':2-app-driver-layer')
+
+        compile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
+        runtime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
+
+        compileOnly "org.apiguardian:apiguardian-api:1.0.0"
+
+        compile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
+        compile "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
+        compile "org.junit.platform:junit-platform-console-standalone:${junitPlatformVersion}"
+    }
+}
