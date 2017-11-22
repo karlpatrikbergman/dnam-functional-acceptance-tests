@@ -89,3 +89,6 @@ crashlytics-build.properties
 fabric.properties
 /.idea/
 /1-test-impl-layer/delete-when-certain/
+/1-test-impl-layer/build/
+/2-app-driver-layer/build/
+/0-acc-criteria-layer/build/

@@ -1,5 +1,0 @@
-version: "2"
-services:
-  dnam-mainserver:
-    image: se-artif-prd.infinera.com/enlighten/tnmserver:30.0.0.e23b8ae
-    container_name: dnam-mainserver

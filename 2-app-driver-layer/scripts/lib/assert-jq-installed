@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+assert_jq_installed() {
+    if ! [ -x "$(command -v jq)" ]; then
+        echo "jq is not installed"
+        exit 1
+    fi
+    #printf "%s\n" "jq is installed"
+}
+assert_jq_installed

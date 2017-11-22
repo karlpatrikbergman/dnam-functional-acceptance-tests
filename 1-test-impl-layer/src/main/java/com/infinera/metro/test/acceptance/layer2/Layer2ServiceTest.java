@@ -4,17 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-@DisplayName("Testing Layer2Service...")
+@DisplayName("Testing Layer2...")
 @Slf4j
 class Layer2ServiceTest {
 
-    private final Layer2Service layer2Service = new Layer2Service();
-
     @Test
-    @DisplayName("addLeadingBar(\"bapappa\") should return Barbapappa")
-    void addLedingBarToBapappahouldReturnBarbapappa() {
-        assertEquals("Barbapappa", layer2Service.addLeadingBar("bapappa"));
+    @DisplayName("Some layer2 use case test")
+    void layer2UseCaseTest() {
+        log.info("Running some layer2 use case test");
     }
 }

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -o nounset # Treat unset variables as an error
+
+debug() {
+    export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }' # Uncomment for debuggin
+    set -x #
+}
+

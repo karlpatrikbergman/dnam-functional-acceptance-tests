@@ -1,0 +1,30 @@
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integrationTest/java')
+        }
+        resources.srcDir file('src/integrationTest/resources')
+    }
+}
+task integrationTest(type: JavaExec, dependsOn: jar) {
+    dependencies {
+        testRuntime "org.junit.platform:junit-platform-console-standalone:1.0.2"
+        compile "org.apiguardian:apiguardian-api:1.0.0"
+    }
+
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    systemProperties['jar.path'] = jar.archivePath
+
+    main 'org.junit.platform.console.ConsoleLauncher'
+    args = ['--scan-classpath', sourceSets.integrationTest.output.classesDirs.asPath,
+            '--reports-dir', "${buildDir}/test-results/integrationTest",
+            '--exclude-engine', 'junit-vintage'
+    ]
+}
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}

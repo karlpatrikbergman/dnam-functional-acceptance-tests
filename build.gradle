@@ -18,6 +18,7 @@ ext.junitJupiterVersion = '5.0.2'
 ext.lombokVersion = '1.16.18'
 ext.slf4jVersion = '1.2.3'
 ext.logbackVersion = '1.2.3'
+ext.docker_compose_rule_version = "0.33.0"
 
 subprojects {
     group "com.infinera.metro.dnam.test.acceptance"
@@ -38,10 +39,19 @@ subprojects {
 
     junitPlatform {
         reportsDir file('build/test-results/junit-platform')
+        filters {
+            engines {
+                include 'junit-jupiter'
+                exclude 'junit-vintage'
+            }
+        }
     }
 
     repositories {
         mavenCentral()
+        maven {
+            url 'https://dl.bintray.com/palantir/releases' // docker-compose-rule is published on bintray
+        }
         maven {
             url "https://se-artif-prd.infinera.com/artifactory/repo"
             credentials {
@@ -58,9 +68,7 @@ subprojects {
 
         testCompile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
         testRuntime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
-
         testCompileOnly "org.apiguardian:apiguardian-api:1.0.0"
-
         testCompile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
         testCompile "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
         testCompile "org.junit.platform:junit-platform-console-standalone:${junitPlatformVersion}"
@@ -75,18 +83,6 @@ project(':1-test-impl-layer') {
         from configurations.testRuntime
         into "build/libs"
     }
-
-//    task testJar(type: org.gradle.jvm.tasks.Jar, dependsOn: copyTestRuntimeLibs) {
-//        baseName = 'dnam-functional-acceptance-tests'
-//        version = project.version
-//        manifest {
-//            attributes 'Implementation-Title': 'dnam-functional-acceptance-tests',
-//                    'Implementation-Version': project.version
-//        }
-//        from sourceSets.test.output
-//    }
-
-//    build.finalizedBy(testJar)
     build.finalizedBy(copyTestRuntimeLibs)
 
     dependencies {
@@ -100,5 +96,51 @@ project(':1-test-impl-layer') {
         compile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
         compile "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
         compile "org.junit.platform:junit-platform-console-standalone:${junitPlatformVersion}"
+    }
+}
+
+project(':2-app-driver-layer') {
+    apply from: "integration-test.gradle"
+
+    def dnamVersion
+    task setDnamVersionToLatestPublished(type: Exec) {
+        doFirst {
+            workingDir 'scripts'
+            standardOutput = new ByteArrayOutputStream()
+        }
+        commandLine './run-get-latest-version-published-to-tnm-libs-local.sh'
+        doLast {
+            dnamVersion = standardOutput.toString()
+        }
+    }
+
+    if (project.hasProperty('dnamVersion') && project.hasProperty('dnamVersion') != "") {
+        dnamVersion = project.getProperty('dnamVersion')
+    } else {
+        setDnamVersionToLatestPublished.execute()
+    }
+
+    dependencies {
+        compile project(':common')
+        compile "org.springframework:spring-remoting:2.0.8"
+        compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final" //Fix unknown enum constant warning
+        compile "se.transmode.tnm:rmiclient_if:${dnamVersion}"
+        compile "se.transmode.tnm:model_lib:${dnamVersion}"
+        compile "se.transmode.tnm:crypto:${dnamVersion}"
+        compile "se.transmode:tm_lang_lib:${dnamVersion}"
+        compile "se.transmode:tm_common_lib:${dnamVersion}"
+        compile "se.transmode.tnm:common_if:${dnamVersion}"
+        compile "se.transmode.tnm:action_api:${dnamVersion}"
+    }
+}
+
+project(':common') {
+
+    dependencies {
+        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
+        compile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
+        runtime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
+        compileOnly "org.apiguardian:apiguardian-api:1.0.0"
+        compile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
     }
 }
