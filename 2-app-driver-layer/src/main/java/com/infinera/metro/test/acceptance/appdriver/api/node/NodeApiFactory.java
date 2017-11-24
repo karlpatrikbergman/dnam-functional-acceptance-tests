@@ -6,14 +6,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/**
+ * Here we could add a key for next generation metro management application
+ */
 public enum NodeApiFactory {
     NODE_API_FACTORY;
 
-    final static Map<NodeApi.Type, Supplier<NodeApi>> map = new HashMap<>();
+    public enum NodeApiType {DNAM}
+
+    final static Map<NodeApiType, Supplier<NodeApi>> map = new HashMap<>();
     static {
-        map.put(NodeApi.Type.DNAM, DnamNodeApi::new);
+        map.put(NodeApiType.DNAM, DnamNodeApi::new);
     }
-    public NodeApi getNodeApi(NodeApi.Type nodeApiType){
+    public NodeApi getNodeApi(NodeApiType nodeApiType){
         Supplier<NodeApi> nodeApi = map.get(nodeApiType);
         if(nodeApi != null) {
             return nodeApi.get();

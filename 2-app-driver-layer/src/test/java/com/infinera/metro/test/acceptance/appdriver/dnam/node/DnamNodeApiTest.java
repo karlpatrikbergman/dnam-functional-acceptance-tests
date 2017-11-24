@@ -2,6 +2,7 @@ package com.infinera.metro.test.acceptance.appdriver.dnam.node;
 
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApi;
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApiFactory;
+import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApiFactory.NodeApiType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -17,7 +18,7 @@ public class DnamNodeApiTest {
     @DisplayName("Get NodeApi of type DNAM should return object not null")
     @Test
     public void getNodeApiOfTypeDnam() {
-        NodeApi nodeApi = NodeApiFactory.NODE_API_FACTORY.getNodeApi(NodeApi.Type.DNAM);
+        NodeApi nodeApi = NodeApiFactory.NODE_API_FACTORY.getNodeApi(NodeApiType.DNAM);
         assertNotNull(nodeApi);
 
         nodeApi.addNode("172.2.4.4");

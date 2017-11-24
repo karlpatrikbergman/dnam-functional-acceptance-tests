@@ -131,6 +131,7 @@ project(':2-app-driver-layer') {
         compile "se.transmode:tm_common_lib:${dnamVersion}"
         compile "se.transmode.tnm:common_if:${dnamVersion}"
         compile "se.transmode.tnm:action_api:${dnamVersion}"
+        compile "com.github.rholder:guava-retrying:2.0.0"
     }
 }
 
