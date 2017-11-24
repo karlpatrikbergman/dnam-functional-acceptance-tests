@@ -19,6 +19,8 @@ ext.lombokVersion = '1.16.18'
 ext.slf4jVersion = '1.2.3'
 ext.logbackVersion = '1.2.3'
 ext.docker_compose_rule_version = "0.33.0"
+ext.guavaRetryerVersion = "2.0.0"
+ext.docker_client_version = "8.9.2"
 
 subprojects {
     group "com.infinera.metro.dnam.test.acceptance"
@@ -131,7 +133,6 @@ project(':2-app-driver-layer') {
         compile "se.transmode:tm_common_lib:${dnamVersion}"
         compile "se.transmode.tnm:common_if:${dnamVersion}"
         compile "se.transmode.tnm:action_api:${dnamVersion}"
-        compile "com.github.rholder:guava-retrying:2.0.0"
     }
 }
 
@@ -143,5 +144,7 @@ project(':common') {
         runtime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
         compileOnly "org.apiguardian:apiguardian-api:1.0.0"
         compile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
+        compile "com.github.rholder:guava-retrying:${guavaRetryerVersion}"
+        compile "com.spotify:docker-client:${docker_client_version}"
     }
 }

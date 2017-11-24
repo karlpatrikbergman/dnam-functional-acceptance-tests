@@ -1,4 +1,4 @@
-package com.infinera.metro.test.acceptance.appdriver.dnam.rmi;
+package com.infinera.metro.test.acceptance.common.util;
 
 import com.github.rholder.retry.*;
 
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ExponentinalBackoff {
 
-    <T> T perform(Callable<T> callable) {
+    public <T> T perform(Callable<T> callable) {
         Retryer<T> retryer = RetryerBuilder.<T>newBuilder()
             .retryIfResult(Objects::isNull)
             .retryIfException()
