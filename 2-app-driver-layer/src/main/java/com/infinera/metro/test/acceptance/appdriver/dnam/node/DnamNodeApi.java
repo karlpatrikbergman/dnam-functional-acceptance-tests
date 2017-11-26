@@ -4,7 +4,6 @@ import com.infinera.metro.test.acceptance.appdriver.api.RemoteServiceAccessData;
 import com.infinera.metro.test.acceptance.appdriver.api.node.Node;
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApi;
 import com.infinera.metro.test.acceptance.appdriver.dnam.DnamRmiClient;
-import com.infinera.metro.test.acceptance.appdriver.dnam.rmi.RmiSessionFactory;
 import lombok.extern.slf4j.Slf4j;
 import se.transmode.tnm.rmiclient.server.rmiserver.AbstractResponse;
 import se.transmode.tnm.rmiclient.server.services.discovery.NodeEntry;
@@ -15,18 +14,15 @@ import java.rmi.RemoteException;
 import static com.infinera.metro.test.acceptance.appdriver.dnam.node.NodeApiUtil.getDefaultNodeEntry;
 
 /**
- * Don't use this class directly, use appdriver.api.node.NodeApiFactory instead.
+ * Don't use this class directly in tests, use appdriver.api.node.NodeApiFactory instead.
  * TODO: Move implementations to separate gradle modules? Or wait for Java 9 so we can hide implementation packages?
  */
 @Slf4j
 public class DnamNodeApi extends DnamRmiClient implements NodeApi {
 
-
     public DnamNodeApi(RemoteServiceAccessData remoteServiceAccessData) {
-        super(new RmiSessionFactory(remoteServiceAccessData.getIpAddress(), remoteServiceAccessData.getPort()).getSession());
+        super(remoteServiceAccessData);
     }
-
-
 
     @Override
     public void addNode(Node node) {
