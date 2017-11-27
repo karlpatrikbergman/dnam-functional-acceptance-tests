@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import se.transmode.tnm.rmiclient.server.rmiserver.AbstractResponse;
 import se.transmode.tnm.rmiclient.server.services.discovery.NodeEntry;
 import se.transmode.tnm.rmiclient.server.services.discovery.NodesDiscoveryRequest;
+import se.transmode.tnm.rmiclient.server.services.discovery.NodesDiscoveryResponse;
 
 import java.rmi.RemoteException;
 
@@ -32,8 +33,8 @@ public class DnamNodeApi extends DnamRmiClient implements NodeApi {
     }
 
     public Node getNode(Node node) {
-        AbstractResponse abstractResponse = process(NodesDiscoveryRequest.getNode(node.getIpAddress()));
-        NodeEntry nodeEntry = abstractResponse.asNodesDiscoveryResponse().getNodeEntry();
+        NodesDiscoveryResponse nodesDiscoveryResponse = process(NodesDiscoveryRequest.getNode(node.getIpAddress()));
+        NodeEntry nodeEntry = nodesDiscoveryResponse.getNodeEntry();
         return new Node(nodeEntry.getUserRef());
     }
 
@@ -52,11 +53,12 @@ public class DnamNodeApi extends DnamRmiClient implements NodeApi {
 
     }
 
-    private AbstractResponse process(NodesDiscoveryRequest nodesDiscoveryRequest) {
+    //TODO: Share code, generics
+    private NodesDiscoveryResponse process(NodesDiscoveryRequest nodesDiscoveryRequest) {
         try {
             AbstractResponse abstractResponse = session.process(nodesDiscoveryRequest);
             checkResponse(abstractResponse);
-            return abstractResponse;
+            return abstractResponse.asNodesDiscoveryResponse();
         } catch (RemoteException e) {
             throw new RuntimeException("Failed to perform node request"
                 .concat(nodesDiscoveryRequest.toString())
@@ -65,9 +67,11 @@ public class DnamNodeApi extends DnamRmiClient implements NodeApi {
         }
     }
 
+    //TODO: Share code
     private void checkResponse(AbstractResponse abstractResponse) {
-        if(abstractResponse == null || abstractResponse.getReturnCode() != AbstractResponse.RESPONSE_OK) {
-            throw new RuntimeException("Retrieved an erroneous response. Either response was null or response code was not RESPONSE_OK");
+        if(abstractResponse == null ||
+                abstractResponse.getReturnCode() != AbstractResponse.RESPONSE_OK) {
+            throw new RuntimeException("Retrieved an erroneous response. Either response was null or return code was not RESPONSE_OK");
         }
     }
 }

@@ -2,7 +2,7 @@ package com.infinera.metro.test.acceptance.appdriver.api.node;
 
 import com.infinera.metro.test.acceptance.appdriver.api.RemoteServiceAccessData;
 import com.infinera.metro.test.acceptance.appdriver.dnam.node.DnamNodeApi;
-import com.infinera.metro.test.acceptance.appdriver.nextgen.NextGenNodeApi;
+import com.infinera.metro.test.acceptance.appdriver.nextgen.node.NextGenNodeApi;
 
 import java.util.HashMap;
 import java.util.Map;

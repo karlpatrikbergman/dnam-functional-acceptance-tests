@@ -1,4 +1,4 @@
-package com.infinera.metro.test.acceptance.appdriver.nextgen;
+package com.infinera.metro.test.acceptance.appdriver.nextgen.node;
 
 import com.infinera.metro.test.acceptance.appdriver.api.RemoteServiceAccessData;
 import com.infinera.metro.test.acceptance.appdriver.api.node.Node;

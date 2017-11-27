@@ -14,5 +14,6 @@ public class Foo2Test extends AbstractFooTest {
     @Test
     public void test() {
         log.info("Running Foo2Test.test()");
+
     }
 }

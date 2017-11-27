@@ -1,0 +1,135 @@
+---
+nodeAccessDataMap:
+  node1:
+    ipAddress: "172.35.0.5"
+    port: 80
+    userName: "root"
+    password: "root"
+  node2:
+    ipAddress: "172.35.0.3"
+    port: 80
+    userName: "root"
+    password: "root"
+nodeEquipmentMap:
+  nodeA: !<.NodeEquipment>
+    boards:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe>
+      subrack: "subrack1"
+      slot: "slot2"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 1
+        receivePort: 2
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "clientIfExpectedTxFrequency"
+              value: "w1530"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "clientIfConfigurationCommand"
+              value: "wan10GbE yes"
+      linePorts:
+      - transmitPort: 3
+        receivePort: 4
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "expectedFrequency"
+              value: "ch939"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL>
+      subrack: "subrack1"
+      slot: "slot3"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 41
+        receivePort: 42
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "descr"
+              value: "My description"
+      linePorts:
+      - transmitPort: 81
+        receivePort: 82
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "descr"
+              value: "My description"
+  nodeZ: !<.NodeEquipment>
+    boards:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe>
+      subrack: "subrack1"
+      slot: "slot2"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 1
+        receivePort: 2
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "clientIfExpectedTxFrequency"
+              value: "w1530"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "clientIfConfigurationCommand"
+              value: "wan10GbE yes"
+      linePorts:
+      - transmitPort: 3
+        receivePort: 4
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "expectedFrequency"
+              value: "ch939"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL>
+      subrack: "subrack1"
+      slot: "slot3"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 41
+        receivePort: 42
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "descr"
+              value: "My description"
+      linePorts:
+      - transmitPort: 81
+        receivePort: 82
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "descr"
+              value: "My description"

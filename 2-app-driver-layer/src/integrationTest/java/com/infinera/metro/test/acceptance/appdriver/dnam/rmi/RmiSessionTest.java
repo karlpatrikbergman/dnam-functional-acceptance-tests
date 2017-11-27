@@ -1,6 +1,6 @@
 package com.infinera.metro.test.acceptance.appdriver.dnam.rmi;
 
-import com.infinera.metro.test.acceptance.appdriver.dnam.DnamServerExtension;
+import com.infinera.metro.test.acceptance.appdriver.dnam.DnamAppdriverTestFixture;
 import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.connection.DockerPort;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * DnamServerExtension extends DockerComposeExtension which is a temporary workaround until DockerCompose works with
  * JUnit 5. It will bring up dnam-server et. al in docker containers before actual test.
  */
-@ExtendWith(DnamServerExtension.class)
+@ExtendWith(DnamAppdriverTestFixture.class)
 @Tag("DnamApplicationDriverTest")
 @DisplayName("RmiSessionTest")
 @Slf4j

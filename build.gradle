@@ -21,6 +21,12 @@ ext.logbackVersion = '1.2.3'
 ext.docker_compose_rule_version = "0.33.0"
 ext.guavaRetryerVersion = "2.0.0"
 ext.docker_client_version = "8.9.2"
+ext.xtm_rest_client_version = "1.0.0f5bde5"
+ext.spring_version = "5.0.1.RELEASE"
+ext.http_client_version = "4.5.3"
+ext.stringtemplate_version = "4.0.2"
+ext.jackson_version = "2.9.1"
+
 
 subprojects {
     group "com.infinera.metro.dnam.test.acceptance"
@@ -98,6 +104,18 @@ project(':1-test-impl-layer') {
         compile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
         compile "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
         compile "org.junit.platform:junit-platform-console-standalone:${junitPlatformVersion}"
+
+        compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-impl:${xtm_rest_client_version}")
+        compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-common:${xtm_rest_client_version}")
+        compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-configuration:${xtm_rest_client_version}")
+
+        compile "commons-validator:commons-validator:1.6"
+        compile "org.springframework:spring-web:${spring_version}"
+        compile "org.apache.httpcomponents:httpclient:${http_client_version}"
+        compile "org.antlr:stringtemplate:${stringtemplate_version}"
+        compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
+        compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
+        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
     }
 }
 
@@ -124,7 +142,7 @@ project(':2-app-driver-layer') {
 
     dependencies {
         compile project(':common')
-        compile "org.springframework:spring-remoting:2.0.8"
+        compile "org.springframework:spring-context:${spring_version}"
         compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final" //Fix unknown enum constant warning
         compile "se.transmode.tnm:rmiclient_if:${dnamVersion}"
         compile "se.transmode.tnm:model_lib:${dnamVersion}"
@@ -137,7 +155,6 @@ project(':2-app-driver-layer') {
 }
 
 project(':common') {
-
     dependencies {
         compile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
         compile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"

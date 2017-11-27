@@ -8,12 +8,14 @@ import com.spotify.docker.client.exceptions.DockerException;
 import com.spotify.docker.client.messages.AttachedNetwork;
 import com.spotify.docker.client.messages.ContainerInfo;
 import com.spotify.docker.client.messages.NetworkSettings;
+import org.slf4j.Logger;
 
 import java.util.Map;
-
+//TODO: Merge with DockerUtil in xtm-rest-client-all
 public enum DockerUtil {
     DOCKER_UTIL;
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(DockerUtil.class);
     private DockerClient dockerClient;
 
     DockerUtil() {
