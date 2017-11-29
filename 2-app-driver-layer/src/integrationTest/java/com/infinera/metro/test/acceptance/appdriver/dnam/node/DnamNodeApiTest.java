@@ -1,10 +1,10 @@
 package com.infinera.metro.test.acceptance.appdriver.dnam.node;
 
+import com.infinera.metro.networkmanager.tools.docker.DockerUtil;
 import com.infinera.metro.test.acceptance.appdriver.api.RemoteServiceAccessData;
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApi;
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApiFactory;
 import com.infinera.metro.test.acceptance.appdriver.dnam.DnamAppdriverTestFixture;
-import com.infinera.metro.test.acceptance.common.docker.DockerUtil;
 import com.infinera.metro.test.acceptance.common.util.ExponentinalBackoff;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
 import com.spotify.docker.client.exceptions.DockerException;

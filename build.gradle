@@ -74,6 +74,8 @@ subprojects {
         compile "ch.qos.logback:logback-classic:${logbackVersion}"
         compile "org.projectlombok:lombok:${lombokVersion}"
 
+        compile "com.infinera.metro.networkmanager.tools:toolbox:1.0.61894d0"
+
         testCompile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
         testRuntime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
         testCompileOnly "org.apiguardian:apiguardian-api:1.0.0"
@@ -122,23 +124,23 @@ project(':1-test-impl-layer') {
 project(':2-app-driver-layer') {
     apply from: "integration-test.gradle"
 
-    def dnamVersion
-    task setDnamVersionToLatestPublished(type: Exec) {
-        doFirst {
-            workingDir 'scripts'
-            standardOutput = new ByteArrayOutputStream()
-        }
-        commandLine './run-get-latest-version-published-to-tnm-libs-local.sh'
-        doLast {
-            dnamVersion = standardOutput.toString()
-        }
-    }
-
-    if (project.hasProperty('dnamVersion') && project.hasProperty('dnamVersion') != "") {
-        dnamVersion = project.getProperty('dnamVersion')
-    } else {
-        setDnamVersionToLatestPublished.execute()
-    }
+    def dnamVersion = "30.0.0"
+//    task setDnamVersionToLatestPublished(type: Exec) {
+//        doFirst {
+//            workingDir 'scripts'
+//            standardOutput = new ByteArrayOutputStream()
+//        }
+//        commandLine './run-get-latest-version-published-to-tnm-libs-local.sh'
+//        doLast {
+//            dnamVersion = standardOutput.toString()
+//        }
+//    }
+//
+//    if (project.hasProperty('dnamVersion') && project.hasProperty('dnamVersion') != "") {
+//        dnamVersion = project.getProperty('dnamVersion')
+//    } else {
+//        setDnamVersionToLatestPublished.execute()
+//    }
 
     dependencies {
         compile project(':common')
