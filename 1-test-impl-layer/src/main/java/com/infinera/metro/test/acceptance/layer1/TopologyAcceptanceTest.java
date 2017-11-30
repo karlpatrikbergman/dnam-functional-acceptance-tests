@@ -7,7 +7,8 @@ import com.infinera.metro.test.acceptance.appdriver.api.topology.Port;
 import com.infinera.metro.test.acceptance.appdriver.dnam.topology.DnamTopologyApi;
 import com.infinera.metro.test.acceptance.common.util.ExponentinalBackoff;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,12 +30,16 @@ class TopologyAcceptanceTest extends MetroManagementDslTest {
 //        nodeNetwork.apply(nodeAccessDataMap);
 //    }
 
+    @BeforeEach
+    public void beforeEach() {
+        nodeApi.assertNodeNotAdded(node1);
+        nodeApi.assertNodeNotAdded(node2);
+    }
+
     @DisplayName("Create peer connection, get peer connection, delete peer connection")
     @Test
     void addGetAndDeletePeerConnection() {
         log.info("######## Running test TopologyAcceptanceTest");
-
-        deleteNode();
 
         nodeApi.addNode(node1);
         nodeApi.addNode(node2);
@@ -45,7 +50,6 @@ class TopologyAcceptanceTest extends MetroManagementDslTest {
             .slot(3)
             .port(81)
             .build();
-        dnamTopologyApi.nodeHasTransmitPort(node1, transmitPort);
 
         Port receivePort = Port.builder()
             .node(node2)
@@ -53,20 +57,17 @@ class TopologyAcceptanceTest extends MetroManagementDslTest {
             .slot(3)
             .port(82)
             .build();
-        dnamTopologyApi.nodeHasReceivePort(node2, receivePort);
 
-        nodeApi.deleteNode(node1);
-        nodeApi.deleteNode(node2);
+        dnamTopologyApi.createPeerConnection(node1, transmitPort, node2, receivePort);
+
+        //TODO: Get peer config and verify it
+
     }
 
-    @Disabled
-    @Test
-    public void deleteNode() {
-        try {
-            nodeApi.deleteNode(node1);
-            nodeApi.deleteNode(node2);
-        } catch (Exception e) {
-
-        }
+    @AfterEach
+    public void afterEach() {
+        nodeApi.deleteNode(node1);
+        nodeApi.deleteNode(node2);
+        //TODO: Clean node configuration!!
     }
 }

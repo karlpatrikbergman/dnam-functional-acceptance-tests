@@ -20,7 +20,7 @@ import se.transmode.tnm.rmiclient.server.services.discovery.SubnetEntry;
 
 import java.util.Arrays;
 
-public class NodeApiUtil {
+public class DnamNodeApiUtil {
     static NodeEntry getDefaultNodeEntry(String nodeIp) {
 
 

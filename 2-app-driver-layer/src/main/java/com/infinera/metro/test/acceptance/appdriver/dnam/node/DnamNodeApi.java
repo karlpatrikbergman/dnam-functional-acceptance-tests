@@ -12,7 +12,7 @@ import se.transmode.tnm.rmiclient.server.services.discovery.NodesDiscoveryRespon
 
 import java.rmi.RemoteException;
 
-import static com.infinera.metro.test.acceptance.appdriver.dnam.node.NodeApiUtil.getDefaultNodeEntry;
+import static com.infinera.metro.test.acceptance.appdriver.dnam.node.DnamNodeApiUtil.getDefaultNodeEntry;
 
 /**
  * Don't use this class directly in tests, use appdriver.api.node.NodeApiFactory instead.
