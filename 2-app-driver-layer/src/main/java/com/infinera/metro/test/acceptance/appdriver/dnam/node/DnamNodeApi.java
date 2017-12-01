@@ -50,28 +50,26 @@ public class DnamNodeApi extends DnamRmiClient implements NodeApi {
     public void deleteNode(Node node) {
         NodeEntry nodeEntry = getDefaultNodeEntry(node.getIpAddress());
         process(NodesDiscoveryRequest.deleteNode(nodeEntry));
-
     }
 
     //TODO: Share code, generics
     private NodesDiscoveryResponse process(NodesDiscoveryRequest nodesDiscoveryRequest) {
         try {
-            AbstractResponse abstractResponse = session.process(nodesDiscoveryRequest);
-            checkResponse(abstractResponse);
-            return abstractResponse.asNodesDiscoveryResponse();
+            NodesDiscoveryResponse nodesDiscoveryResponse = session.process(nodesDiscoveryRequest).asNodesDiscoveryResponse();
+            if(nodesDiscoveryResponse == null ||
+                nodesDiscoveryResponse.getReturnCode() != AbstractResponse.RESPONSE_OK) {
+                throw new RuntimeException("Retrieved an erroneous response for request: "
+                    .concat(nodesDiscoveryRequest.toString()
+                    .concat("\n")
+                    .concat("Response: ")
+                    .concat(nodesDiscoveryResponse.toString())));
+            }
+            return nodesDiscoveryResponse.asNodesDiscoveryResponse();
         } catch (RemoteException e) {
             throw new RuntimeException("Failed to perform node request"
                 .concat(nodesDiscoveryRequest.toString())
                 .concat("Exception: ")
                 .concat(e.getMessage()));
-        }
-    }
-
-    //TODO: Share code
-    private void checkResponse(AbstractResponse abstractResponse) {
-        if(abstractResponse == null ||
-                abstractResponse.getReturnCode() != AbstractResponse.RESPONSE_OK) {
-            throw new RuntimeException("Retrieved an erroneous response. Either response was null or return code was not RESPONSE_OK");
         }
     }
 }

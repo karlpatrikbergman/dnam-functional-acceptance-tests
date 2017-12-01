@@ -2,7 +2,6 @@ package com.infinera.metro.test.acceptance.appdriver.dnam.topology;
 
 import com.github.rholder.retry.*;
 import com.infinera.metro.test.acceptance.appdriver.api.RemoteServiceAccessData;
-import com.infinera.metro.test.acceptance.appdriver.api.node.Node;
 import com.infinera.metro.test.acceptance.appdriver.api.topology.Port;
 import com.infinera.metro.test.acceptance.appdriver.api.topology.TopologyApi;
 import com.infinera.metro.test.acceptance.appdriver.dnam.DnamRmiClient;
@@ -29,21 +28,66 @@ public class DnamTopologyApi extends DnamRmiClient implements TopologyApi {
         super(remoteServiceAccessData);
     }
 
-    public void createPeerConnection(Node transmitNode, Port transmitPort, Node receiveNode, Port receivePort) {
-        final NodeTopologyData transmitNodeTopologydata = getNodePortsTopology(transmitNode.getIpAddress());
+    public void createPeerConnection(Port transmitPort, Port receivePort) {
+
+        final com.google.common.base.Predicate<Collection<NodeTopologyData>> portsCollectionIsEmpty =
+            nodeTopologyDataCollection -> nodeTopologyDataCollection.iterator().next().getPorts().isEmpty();
+
+        final NodeTopologyData transmitNodeTopologydata = getNodeTopology(transmitPort.getNode().getIpAddress(), portsCollectionIsEmpty);
         final AbstractPort abstractPortTransmit = getAbstractPortTransmit(transmitPort, transmitNodeTopologydata);
 
-        final NodeTopologyData receiveNodeTopologydata = getNodePortsTopology(receiveNode.getIpAddress());
+        final NodeTopologyData receiveNodeTopologydata = getNodeTopology(receivePort.getNode().getIpAddress(), portsCollectionIsEmpty);
         final AbstractPort abstractPortReceive = getAbstractPortReceive(receivePort, receiveNodeTopologydata);
 
-        final PeerComEntry peerComEntryTransmitNode = createPeerComEntry("Peer node transmit ("+transmitNode.getIpAddress()+")", abstractPortTransmit, abstractPortReceive);
-        final PeerComEntry peerComEntryReceiveNode = createPeerComEntry("Peer node receive ("+receiveNode.getIpAddress()+")", abstractPortReceive, abstractPortTransmit);
+        final PeerComEntry peerComEntryTransmitNode = createPeerComEntry("Peer node transmit ("+transmitPort.getNode().getIpAddress()+")",
+            abstractPortTransmit, abstractPortReceive);
+
+        final PeerComEntry peerComEntryReceiveNode = createPeerComEntry("Peer node receive ("+receivePort.getNode().getIpAddress()+")",
+            abstractPortReceive, abstractPortTransmit);
 
         transmitNodeTopologydata.setPeers(Collections.singletonList(peerComEntryTransmitNode));
         receiveNodeTopologydata.setPeers(Collections.singletonList(peerComEntryReceiveNode));
 
         setNodePortsTopology(transmitNodeTopologydata);
         setNodePortsTopology(receiveNodeTopologydata);
+    }
+
+    public Port getPeers(Port port) {
+
+        final com.google.common.base.Predicate<Collection<NodeTopologyData>> peersCollectionIsEmpty =
+            nodeTopologyDataCollection -> nodeTopologyDataCollection.iterator().next().getPeers().isEmpty();
+
+        final NodeTopologyData nodeTopologyData = getNodeTopology(port.getNode().getIpAddress(), peersCollectionIsEmpty);
+
+        final PeerComEntry peerComEntry = nodeTopologyData.getPeers().stream()
+            .filter(entry -> {
+                return this.keysAreEqual(entry.getLocalKey(), port.getPeerKey());
+            })
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Failed to find a PeerComEntry for node "
+                .concat(port.getNode().toString())
+                .concat(" matching port "
+                .concat(port.toString()))));
+
+        final AbstractPort abstractPort = nodeTopologyData.getPorts().stream()
+            .filter(port1 -> port1.getKey().equals(port.getKey()))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Failed to find a AbstractPort for node "
+                .concat(port.getNode().toString())
+                .concat(" matching port "
+                    .concat(port.toString()))));
+
+        return Port.builder()
+            .node(port.getNode())
+            .boardName((abstractPort.getBoardTypeText()))
+            .subrack(peerComEntry.getLocalSubrack())
+            .slot(peerComEntry.getLocalSlot())
+            .port(peerComEntry.getLocalPort())
+            .build();
+    }
+
+    private boolean keysAreEqual(String comEntryKey, String portKey) {
+        return comEntryKey.equalsIgnoreCase(portKey);
     }
 
     private AbstractPort getAbstractPortTransmit(Port port, NodeTopologyData nodeTopologyData) {
@@ -61,8 +105,8 @@ public class DnamTopologyApi extends DnamRmiClient implements TopologyApi {
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Failed to find port in NodeTopologyData for node with ip "
                 .concat(nodeTopologyData.getAddress())
-                .concat(" matching test port ")
-                .concat(port.getKey()))
+                .concat(" matching test port with key ")
+                .concat(port.getPeerKey()))
             );
     }
 
@@ -74,16 +118,18 @@ public class DnamTopologyApi extends DnamRmiClient implements TopologyApi {
         assert topoRequest.getEntries().iterator().next().getPeers().equals(nodeTopologyData.getPeers());
     }
 
-    private NodeTopologyData getNodePortsTopology(String nodeIpNumber) {
-        TopoRequest topoRequest = new TopoRequest(TopoRequest.TopoRequestType.REQ_TYPE_GET_NODE_DATA, nodeIpNumber, NodeTopologyData.PORTS);
+    //TODO: Will it be significantly faster to get only ports when only ports are needed?
+    private NodeTopologyData getNodeTopology(String nodeIpNumber, com.google.common.base.Predicate<Collection<NodeTopologyData>> specificDataNotEmtpy) {
+        TopoRequest topoRequest = new TopoRequest(TopoRequest.TopoRequestType.REQ_TYPE_GET_NODE_DATA, nodeIpNumber, NodeTopologyData.ALL_DATA);
         //noinspection ConstantConditions
         Retryer<Collection<NodeTopologyData>> retryer = RetryerBuilder.<Collection<NodeTopologyData>>newBuilder()
             .retryIfResult(Objects::isNull)
             .retryIfResult(Collection::isEmpty)
-            .retryIfResult(nodeTopologyCollection -> nodeTopologyCollection.iterator().next().getPorts().isEmpty())
+            .retryIfResult(specificDataNotEmtpy)
+//            .retryIfResult(nodeTopologyCollection -> nodeTopologyCollection.iterator().next().getPorts().isEmpty())
             .retryIfException()
             .retryIfRuntimeException()
-            .withWaitStrategy(WaitStrategies.exponentialWait(1000, 5, TimeUnit.SECONDS))
+            .withWaitStrategy(WaitStrategies.exponentialWait(1000, 2, TimeUnit.SECONDS))
             .withStopStrategy(StopStrategies.stopAfterAttempt(300))
             .build();
         try {

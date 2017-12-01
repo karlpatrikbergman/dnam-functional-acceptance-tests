@@ -1,5 +1,12 @@
 package com.infinera.metro.test.acceptance.layer1;
 
+import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeConfiguration;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Slot;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.Subrack;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL;
+import com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize.ObjectFromFileUtilJackson;
+import com.infinera.metro.dnam.acceptance.test.node.mib.type.BoardType;
 import com.infinera.metro.networkmanager.tools.docker.DockerUtil;
 import com.infinera.metro.test.acceptance.MetroManagementDslTest;
 import com.infinera.metro.test.acceptance.appdriver.api.RemoteServiceAccessData;
@@ -7,67 +14,81 @@ import com.infinera.metro.test.acceptance.appdriver.api.topology.Port;
 import com.infinera.metro.test.acceptance.appdriver.dnam.topology.DnamTopologyApi;
 import com.infinera.metro.test.acceptance.common.util.ExponentinalBackoff;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-//@ExtendWith(Layer1TestFixture.class)
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@ExtendWith(Layer1TestFixture.class)
 @DisplayName("TopologyAcceptanceTest")
 @Slf4j
 class TopologyAcceptanceTest extends MetroManagementDslTest {
+    private static final String ipAddress = new ExponentinalBackoff().perform(() -> DockerUtil.DOCKER_UTIL.getContainerIpAddress("dnam-mainserver"));
+    private static final DnamTopologyApi dnamTopologyApi = new DnamTopologyApi(new RemoteServiceAccessData(ipAddress, 1099));
+    private static NodeConfiguration nodeConfiguration;
 
-    private static String ipAddress = new ExponentinalBackoff().perform(() -> DockerUtil.DOCKER_UTIL.getContainerIpAddress("dnam-mainserver"));
-    private static DnamTopologyApi dnamTopologyApi = new DnamTopologyApi(new RemoteServiceAccessData(ipAddress, 1099));
-//    private static NodeNetwork nodeNetwork;
+    @BeforeAll
+    static void beforeAll() {
+        Map<String, NodeAccessData> nodeAccessDataMap = new HashMap<>();
+        nodeAccessDataMap.put("nodeA", NodeAccessData.createDefault(node1.getIpAddress())); //Note: use same names for nodes as in yaml-file
+        nodeAccessDataMap.put("nodeZ", NodeAccessData.createDefault(node2.getIpAddress()));
+        nodeConfiguration = ObjectFromFileUtilJackson.INSTANCE
+            .getObject("layer1/layer1_configuration.yaml", NodeConfiguration.class)
+            .copyWithNew(nodeAccessDataMap);
+        nodeConfiguration.apply(nodeAccessDataMap);
 
-//    @BeforeAll
-//    public static void beforeAll(DockerComposeRule dockerComposeRule) throws IOException {
-//        nodeNetwork = ObjectFromFileUtilJackson.INSTANCE.getObject("layer1/simple_layer1_example_network.yaml", NodeNetwork.class);
-//        Map<String, NodeAccessData> nodeAccessDataMap = new HashMap<>();
-//        nodeAccessDataMap.put("nodeA", NodeAccessData.createDefault(node1.getIpAddress())); //Note: use same names for nodes as in yaml-file
-//        nodeAccessDataMap.put("nodeZ", NodeAccessData.createDefault(node2.getIpAddress()));
-//        nodeNetwork.apply(nodeAccessDataMap);
-//    }
-
-    @BeforeEach
-    public void beforeEach() {
         nodeApi.assertNodeNotAdded(node1);
         nodeApi.assertNodeNotAdded(node2);
     }
 
-    @DisplayName("Create peer connection, get peer connection, delete peer connection")
+    @DisplayName("Create peer connection and verify it was created")
     @Test
-    void addGetAndDeletePeerConnection() {
+    void createPeerConnectionAndVerifyItWasCreated() {
         log.info("######## Running test TopologyAcceptanceTest");
 
         nodeApi.addNode(node1);
         nodeApi.addNode(node2);
 
+        Mdu40EvenL transmitBoard = nodeConfiguration.getNodeEquipmentMap()
+            .get("nodeZ")
+            .getBoard(Subrack.subrack1, Slot.slot3, Mdu40EvenL.class);
+
         Port transmitPort = Port.builder()
             .node(node1)
-            .subrack(1)
-            .slot(3)
-            .port(81)
+            .boardName(BoardType.MDU40EVENL.getValue())
+            .subrack(transmitBoard.getSubrack().getValue())
+            .slot(transmitBoard.getSlot().getValue())
+            .port(transmitBoard.getLinePorts().get(0).getTransmitPort())
             .build();
+
+        Mdu40EvenL receiveBoard = nodeConfiguration.getNodeEquipmentMap()
+            .get("nodeA")
+            .getBoard(Subrack.subrack1, Slot.slot3, Mdu40EvenL.class);
 
         Port receivePort = Port.builder()
             .node(node2)
-            .subrack(1)
-            .slot(3)
-            .port(82)
+            .boardName(BoardType.MDU40EVENL.getValue())
+            .subrack(receiveBoard.getSubrack().getValue())
+            .slot(receiveBoard.getSlot().getValue())
+            .port(receiveBoard.getLinePorts().get(0).getReceivePort())
             .build();
 
-        dnamTopologyApi.createPeerConnection(node1, transmitPort, node2, receivePort);
+        dnamTopologyApi.createPeerConnection(transmitPort, receivePort);
 
-        //TODO: Get peer config and verify it
-
+        Port peer = dnamTopologyApi.getPeers(transmitPort);
+        assertNotNull(peer);
     }
 
-    @AfterEach
-    public void afterEach() {
+    @AfterAll
+    static void afterEach() {
         nodeApi.deleteNode(node1);
         nodeApi.deleteNode(node2);
-        //TODO: Clean node configuration!!
+        nodeConfiguration.delete();
     }
 }

@@ -24,7 +24,7 @@ public abstract class MetroManagementDslTest {
 
     static {
 
-        log.info("######## Retrieving NodeApi, TopologyApi and Nodes ({})");
+        log.info("######## Retrieving NodeApi, TopologyApi and Nodes");
 
         final String dnamServerIpAddress = getDockerContainerIpAddress(DNAM_SERVER.getName());
         final RemoteServiceAccessData remoteServiceAccessData = new RemoteServiceAccessData(dnamServerIpAddress, 1099);

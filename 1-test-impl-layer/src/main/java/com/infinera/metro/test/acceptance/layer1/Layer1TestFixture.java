@@ -28,7 +28,7 @@ public class Layer1TestFixture implements BeforeAllCallback, AfterAllCallback, P
             Runtime.getRuntime().addShutdownHook(new Thread(() -> docker.after()));
 
             docker = DockerComposeRule.builder()
-                .pullOnStartup(true)
+//                .pullOnStartup(true)
                 .file("src/main/resources/layer1/docker-compose-layer1-test-fixture.yml")
                 .saveLogsTo("build/layer1/test-docker-logs")
                 .waitingForService("dnam-mainserver", toHaveAllPortsOpen())

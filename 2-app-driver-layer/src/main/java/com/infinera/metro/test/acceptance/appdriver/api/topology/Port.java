@@ -9,6 +9,7 @@ import lombok.Value;
 @Builder
 public class Port {
     private final Node node;
+    private final String boardName;
     private final int subrack;
     private final int slot;
     private final int port;
@@ -16,4 +17,9 @@ public class Port {
     public String getKey() {
         return node.getIpAddress() + "-" + subrack + ":" + slot + ":" + port;
     }
+
+    public String getPeerKey() {
+        return node.getIpAddress() + "-" + boardName + ":" + subrack + ":" + slot + ":" + port;
+    }
+
 }
