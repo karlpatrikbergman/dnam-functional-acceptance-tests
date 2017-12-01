@@ -55,6 +55,45 @@ subprojects {
         }
     }
 
+    /** Artifactory settings **/
+    if (project.hasProperty('partOfLatestCommitHash')) {
+        project.version = project.version + "." + project.partOfLatestCommitHash
+    }
+    artifactory {
+        contextUrl = "${artifactory_contextUrl}"
+        //The base Artifactory URL if not overridden by the publisher/resolver
+        publish {
+            repository {
+                repoKey = "libs-local"
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+                maven = true
+            }
+            defaults {
+                publications('impl')
+            }
+        }
+    }
+
+    publishing {
+        publications {
+            impl(MavenPublication) {
+                groupId project.group
+                artifactId project.name
+                version project.version
+                from components.java
+            }
+        }
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
     repositories {
         mavenCentral()
         maven {
