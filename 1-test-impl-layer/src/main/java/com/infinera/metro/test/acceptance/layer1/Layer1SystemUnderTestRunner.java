@@ -16,14 +16,14 @@ import static com.palantir.docker.compose.connection.waiting.HealthChecks.toHave
  * The reason for reusing the test fixture is the long startup time of dnam-mainserver.
  */
 @Slf4j
-public class Layer1TestFixture implements BeforeAllCallback, AfterAllCallback, ParameterResolver {
+class Layer1SystemUnderTestRunner implements BeforeAllCallback, AfterAllCallback, ParameterResolver {
 
     private static DockerComposeRule docker;
 
     public void beforeAll(ExtensionContext extensionContext) throws Exception {
         if (docker == null) {
 
-            log.info("######## DockerCompose rule to start docker containers for layer 1 tests");
+            log.info("######## {} beforeAll()", Layer1SystemUnderTestRunner.class.getSimpleName());
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> docker.after()));
 

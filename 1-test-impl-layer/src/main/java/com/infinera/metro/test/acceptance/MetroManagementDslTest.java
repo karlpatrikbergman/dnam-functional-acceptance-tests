@@ -17,10 +17,10 @@ import static com.infinera.metro.test.acceptance.common.DockerContainer.*;
 @Slf4j
 public abstract class MetroManagementDslTest {
 
-    protected static final NodeApi nodeApi;
-    protected static final TopologyApi topologyApi;
-    protected static final Node node1;
-    protected static final Node node2;
+    public static final NodeApi nodeApi;
+    public static final TopologyApi topologyApi;
+    public static final Node node1;
+    public static final Node node2;
 
     static {
 

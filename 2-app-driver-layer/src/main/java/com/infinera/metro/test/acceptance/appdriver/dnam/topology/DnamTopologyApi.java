@@ -52,17 +52,14 @@ public class DnamTopologyApi extends DnamRmiClient implements TopologyApi {
         setNodePortsTopology(receiveNodeTopologydata);
     }
 
-    public Port getPeers(Port port) {
-
+    public Peer getPeer(Port port) {
         final com.google.common.base.Predicate<Collection<NodeTopologyData>> peersCollectionIsEmpty =
             nodeTopologyDataCollection -> nodeTopologyDataCollection.iterator().next().getPeers().isEmpty();
 
         final NodeTopologyData nodeTopologyData = getNodeTopology(port.getNode().getIpAddress(), peersCollectionIsEmpty);
 
         final PeerComEntry peerComEntry = nodeTopologyData.getPeers().stream()
-            .filter(entry -> {
-                return this.keysAreEqual(entry.getLocalKey(), port.getPeerKey());
-            })
+            .filter(entry -> entry.getLocalKey().equalsIgnoreCase(port.getPeerKey()))
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Failed to find a PeerComEntry for node "
                 .concat(port.getNode().toString())
@@ -77,17 +74,13 @@ public class DnamTopologyApi extends DnamRmiClient implements TopologyApi {
                 .concat(" matching port "
                     .concat(port.toString()))));
 
-        return Port.builder()
+        return Peer.peerBuilder()
             .node(port.getNode())
             .boardName((abstractPort.getBoardTypeText()))
             .subrack(peerComEntry.getLocalSubrack())
             .slot(peerComEntry.getLocalSlot())
             .port(peerComEntry.getLocalPort())
             .build();
-    }
-
-    private boolean keysAreEqual(String comEntryKey, String portKey) {
-        return comEntryKey.equalsIgnoreCase(portKey);
     }
 
     private AbstractPort getAbstractPortTransmit(Port port, NodeTopologyData nodeTopologyData) {
@@ -126,7 +119,6 @@ public class DnamTopologyApi extends DnamRmiClient implements TopologyApi {
             .retryIfResult(Objects::isNull)
             .retryIfResult(Collection::isEmpty)
             .retryIfResult(specificDataNotEmtpy)
-//            .retryIfResult(nodeTopologyCollection -> nodeTopologyCollection.iterator().next().getPorts().isEmpty())
             .retryIfException()
             .retryIfRuntimeException()
             .withWaitStrategy(WaitStrategies.exponentialWait(1000, 2, TimeUnit.SECONDS))
