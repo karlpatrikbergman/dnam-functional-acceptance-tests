@@ -29,7 +29,7 @@ import static com.infinera.metro.test.acceptance.MetroManagementDslTest.*;
  * The reason for reusing the test fixture is the long startup time of dnam-mainserver.
  */
 @Slf4j
-class Layer1TestDataConfigurer extends Layer1SystemUnderTestRunner {
+class Layer1TestDataConfigurer extends Layer1TestFixtureRunner {
 
     private static NodeConfiguration nodeConfiguration; //Don't leak to test implementation!
     @Getter private static Port nodeALinePort;
@@ -47,13 +47,11 @@ class Layer1TestDataConfigurer extends Layer1SystemUnderTestRunner {
          */
         applyNodeConfiguration();
         createAppDriverDomainObjects();
-
-
     }
 
     private void applyNodeConfiguration() {
 
-        log.info("Configuring nodes using xmt-rest-client and yaml-specification");
+        log.info("######## Configuring nodes using xmt-rest-client and yaml-specification");
 
         final Map<String, NodeAccessData> nodeAccessDataMap = new HashMap<>();
         nodeAccessDataMap.put("nodeA", NodeAccessData.createDefault(node1.getIpAddress())); //Note: use same names for nodes as in yaml-file
@@ -66,7 +64,7 @@ class Layer1TestDataConfigurer extends Layer1SystemUnderTestRunner {
 
     private void createAppDriverDomainObjects() {
 
-        log.info("Creating application driver domain objects based on configuration from yaml-file");
+        log.info("######## Creating application driver domain objects based on configuration from yaml-file");
 
         final Mdu40EvenL transmitBoard = nodeConfiguration.getNodeEquipmentMap()
             .get("nodeA")
@@ -98,11 +96,11 @@ class Layer1TestDataConfigurer extends Layer1SystemUnderTestRunner {
 
         log.info("######## {} afterAll()", Layer1TestDataConfigurer.class.getSimpleName());
 
-        log.info("Deleting node configuration");
+        log.info("######## Deleting node configuration");
         nodeConfiguration.delete();
 
 
-        log.info("Removing nodes from Network Manager (System under test");
+        log.info("######## Removing nodes from Network Manager (System under test");
         nodeApi.deleteNode(node1);
         nodeApi.deleteNode(node2);
     }

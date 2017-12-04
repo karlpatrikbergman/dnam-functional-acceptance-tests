@@ -1,7 +1,6 @@
-package com.infinera.metro.test.acceptance.appdriver.dnam.topology;
+package com.infinera.metro.test.acceptance.appdriver.api.topology;
 
 import com.infinera.metro.test.acceptance.appdriver.api.node.Node;
-import com.infinera.metro.test.acceptance.appdriver.api.topology.Port;
 import lombok.Builder;
 
 public class Peer extends Port {

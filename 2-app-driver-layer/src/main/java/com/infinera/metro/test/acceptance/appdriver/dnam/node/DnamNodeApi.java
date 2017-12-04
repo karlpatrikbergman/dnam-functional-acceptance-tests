@@ -5,12 +5,9 @@ import com.infinera.metro.test.acceptance.appdriver.api.node.Node;
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApi;
 import com.infinera.metro.test.acceptance.appdriver.dnam.DnamRmiClient;
 import lombok.extern.slf4j.Slf4j;
-import se.transmode.tnm.rmiclient.server.rmiserver.AbstractResponse;
 import se.transmode.tnm.rmiclient.server.services.discovery.NodeEntry;
 import se.transmode.tnm.rmiclient.server.services.discovery.NodesDiscoveryRequest;
 import se.transmode.tnm.rmiclient.server.services.discovery.NodesDiscoveryResponse;
-
-import java.rmi.RemoteException;
 
 import static com.infinera.metro.test.acceptance.appdriver.dnam.node.DnamNodeApiUtil.getDefaultNodeEntry;
 
@@ -19,7 +16,7 @@ import static com.infinera.metro.test.acceptance.appdriver.dnam.node.DnamNodeApi
  * TODO: Move implementations to separate gradle modules? Or wait for Java 9 so we can hide implementation packages?
  */
 @Slf4j
-public class DnamNodeApi extends DnamRmiClient implements NodeApi {
+public class DnamNodeApi extends DnamRmiClient<NodesDiscoveryRequest, NodesDiscoveryResponse> implements NodeApi {
 
     public DnamNodeApi(RemoteServiceAccessData remoteServiceAccessData) {
         super(remoteServiceAccessData);
@@ -51,26 +48,26 @@ public class DnamNodeApi extends DnamRmiClient implements NodeApi {
         NodeEntry nodeEntry = getDefaultNodeEntry(node.getIpAddress());
         process(NodesDiscoveryRequest.deleteNode(nodeEntry));
     }
-
-    //TODO: Share code, generics
-    private NodesDiscoveryResponse process(NodesDiscoveryRequest nodesDiscoveryRequest) {
-        try {
-            NodesDiscoveryResponse nodesDiscoveryResponse = session.process(nodesDiscoveryRequest).asNodesDiscoveryResponse();
-            if(nodesDiscoveryResponse == null ||
-                nodesDiscoveryResponse.getReturnCode() != AbstractResponse.RESPONSE_OK) {
-                throw new RuntimeException("Retrieved an erroneous response for request: "
-                    .concat(nodesDiscoveryRequest.toString()
-                    .concat("\n")
-                    .concat("Response: ")
-                    .concat(nodesDiscoveryResponse.toString())));
-            }
-            return nodesDiscoveryResponse.asNodesDiscoveryResponse();
-        } catch (RemoteException e) {
-            throw new RuntimeException("Failed to perform node request"
-                .concat(nodesDiscoveryRequest.toString())
-                .concat("Exception: ")
-                .concat(e.getMessage()));
-        }
-    }
+//
+//    //TODO: Share code, generics
+//    private NodesDiscoveryResponse process(NodesDiscoveryRequest nodesDiscoveryRequest) {
+//        try {
+//            NodesDiscoveryResponse nodesDiscoveryResponse = session.process(nodesDiscoveryRequest).asNodesDiscoveryResponse();
+//            if(nodesDiscoveryResponse == null ||
+//                nodesDiscoveryResponse.getReturnCode() != AbstractResponse.RESPONSE_OK) {
+//                throw new RuntimeException("Retrieved an erroneous response for request: "
+//                    .concat(nodesDiscoveryRequest.toString()
+//                    .concat("\n")
+//                    .concat("Response: ")
+//                    .concat(nodesDiscoveryResponse.toString())));
+//            }
+//            return nodesDiscoveryResponse.asNodesDiscoveryResponse();
+//        } catch (RemoteException e) {
+//            throw new RuntimeException("Failed to perform node request"
+//                .concat(nodesDiscoveryRequest.toString())
+//                .concat("Exception: ")
+//                .concat(e.getMessage()));
+//        }
+//    }
 }
 

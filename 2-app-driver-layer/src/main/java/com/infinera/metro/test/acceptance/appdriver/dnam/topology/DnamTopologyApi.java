@@ -2,17 +2,16 @@ package com.infinera.metro.test.acceptance.appdriver.dnam.topology;
 
 import com.github.rholder.retry.*;
 import com.infinera.metro.test.acceptance.appdriver.api.RemoteServiceAccessData;
+import com.infinera.metro.test.acceptance.appdriver.api.topology.Peer;
 import com.infinera.metro.test.acceptance.appdriver.api.topology.Port;
 import com.infinera.metro.test.acceptance.appdriver.api.topology.TopologyApi;
 import com.infinera.metro.test.acceptance.appdriver.dnam.DnamRmiClient;
-import se.transmode.tnm.rmiclient.server.rmiserver.AbstractResponse;
 import se.transmode.tnm.rmiclient.server.services.connections.ports.AbstractPort;
 import se.transmode.tnm.rmiclient.server.services.connections.topology.NodeTopologyData;
 import se.transmode.tnm.rmiclient.server.services.connections.topology.PeerComEntry;
 import se.transmode.tnm.rmiclient.server.services.connections.topology.TopoRequest;
 import se.transmode.tnm.rmiclient.server.services.connections.topology.TopoResponse;
 
-import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -22,7 +21,7 @@ import java.util.function.Predicate;
 
 import static com.infinera.metro.test.acceptance.appdriver.dnam.topology.DnamTopologyUtil.createPeerComEntry;
 
-public class DnamTopologyApi extends DnamRmiClient implements TopologyApi {
+public class DnamTopologyApi extends DnamRmiClient<TopoRequest, TopoResponse> implements TopologyApi {
 
     public DnamTopologyApi(RemoteServiceAccessData remoteServiceAccessData) {
         super(remoteServiceAccessData);
@@ -134,26 +133,26 @@ public class DnamTopologyApi extends DnamRmiClient implements TopologyApi {
                 .concat(e.getMessage()));
         }
     }
-
-    //TODO: Share code
-    private TopoResponse process(TopoRequest topoRequest) {
-        try {
-            AbstractResponse abstractResponse = session.process(topoRequest);
-            checkResponse(abstractResponse);
-            return (TopoResponse) abstractResponse;
-        } catch (RemoteException e) {
-            throw new RuntimeException("Failed to perform node request"
-                .concat(topoRequest.toString())
-                .concat("Exception: ")
-                .concat(e.getMessage()));
-        }
-    }
-
-    //TODO: Share code
-    private void checkResponse(AbstractResponse abstractResponse) {
-        if(abstractResponse == null ||
-                abstractResponse.getReturnCode() != AbstractResponse.RESPONSE_OK) {
-            throw new RuntimeException("Retrieved an erroneous response. Either response was null or return code was not RESPONSE_OK");
-        }
-    }
+//
+//    //TODO: Share code
+//    private TopoResponse process(TopoRequest topoRequest) {
+//        try {
+//            AbstractResponse abstractResponse = session.process(topoRequest);
+//            checkResponse(abstractResponse);
+//            return (TopoResponse) abstractResponse;
+//        } catch (RemoteException e) {
+//            throw new RuntimeException("Failed to perform node request"
+//                .concat(topoRequest.toString())
+//                .concat("Exception: ")
+//                .concat(e.getMessage()));
+//        }
+//    }
+//
+//    //TODO: Share code
+//    private void checkResponse(AbstractResponse abstractResponse) {
+//        if(abstractResponse == null ||
+//                abstractResponse.getReturnCode() != AbstractResponse.RESPONSE_OK) {
+//            throw new RuntimeException("Retrieved an erroneous response. Either response was null or return code was not RESPONSE_OK");
+//        }
+//    }
 }

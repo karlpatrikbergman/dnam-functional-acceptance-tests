@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@ExtendWith(Layer1SystemUnderTestRunner.class)
+@ExtendWith(Layer1TestFixtureRunner.class)
 @DisplayName("NodeAcceptanceTest")
 @Slf4j
 class NodeAcceptanceTest extends MetroManagementDslTest {
