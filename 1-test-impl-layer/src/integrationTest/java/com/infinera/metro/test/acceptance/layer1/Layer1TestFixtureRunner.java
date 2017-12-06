@@ -28,6 +28,7 @@ class Layer1TestFixtureRunner implements BeforeAllCallback, AfterAllCallback, Pa
             Thread dockerAfterThread = new Thread(){
                 public void run(){
                     if(docker != null) {
+                        log.info("######## Running docker after (shutdown hook)");
                         docker.after();
                     } else {
                         log.error("Failed to add shutdown hook. Field 'docker' was null");
@@ -41,7 +42,7 @@ class Layer1TestFixtureRunner implements BeforeAllCallback, AfterAllCallback, Pa
 
             docker = DockerComposeRule.builder()
 //                .pullOnStartup(true)
-                .file("src/main/resources/layer1/docker-compose-layer1-test-fixture.yml")
+                .file("src/integrationTest/resources/layer1/docker-compose-layer1-test-fixture.yml")
                 .saveLogsTo("build/layer1/test-docker-logs")
                 .waitingForService("dnam-mainserver", toHaveAllPortsOpen())
                 .shutdownStrategy(ShutdownStrategy.GRACEFUL)

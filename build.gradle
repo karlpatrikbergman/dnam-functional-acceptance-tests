@@ -27,6 +27,7 @@ ext.httpClientVersion = "4.5.3"
 ext.stringtemplateVersion = "4.0.2"
 ext.jacksonVersion = "2.9.1"
 ext.toolboxVersion = "1.0.5649c27"
+ext.jsoupVersion = "1.11.2"
 
 subprojects {
     group "com.infinera.metro.dnam.test.acceptance"
@@ -126,6 +127,7 @@ subprojects {
 
 
 project(':1-test-impl-layer') {
+    apply from: "../integration-test.gradle"
 
     task copyTestRuntimeLibs(type: Copy) {
         dependsOn build
@@ -136,6 +138,9 @@ project(':1-test-impl-layer') {
 
     dependencies {
         compile project(':2-app-driver-layer')
+
+
+        compile "org.jsoup:jsoup:${jsoupVersion}"
 
         compile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
         runtime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
@@ -161,25 +166,25 @@ project(':1-test-impl-layer') {
 }
 
 project(':2-app-driver-layer') {
-    apply from: "integration-test.gradle"
+    apply from: "../integration-test.gradle"
 
     def dnamVersion = "30.0.0"
-//    task setDnamVersionToLatestPublished(type: Exec) {
-//        doFirst {
-//            workingDir 'scripts'
-//            standardOutput = new ByteArrayOutputStream()
-//        }
-//        commandLine './run-get-latest-version-published-to-tnm-libs-local.sh'
-//        doLast {
-//            dnamVersion = standardOutput.toString()
-//        }
-//    }
-//
-//    if (project.hasProperty('dnamVersion') && project.hasProperty('dnamVersion') != "") {
-//        dnamVersion = project.getProperty('dnamVersion')
-//    } else {
-//        setDnamVersionToLatestPublished.execute()
-//    }
+    task setDnamVersionToLatestPublished(type: Exec) {
+        doFirst {
+            workingDir 'scripts'
+            standardOutput = new ByteArrayOutputStream()
+        }
+        commandLine './run-get-latest-version-published-to-tnm-libs-local.sh'
+        doLast {
+            dnamVersion = standardOutput.toString()
+        }
+    }
+
+    if (project.hasProperty('dnamVersion') && project.hasProperty('dnamVersion') != "") {
+        dnamVersion = project.getProperty('dnamVersion')
+    } else {
+        setDnamVersionToLatestPublished.execute()
+    }
 
     dependencies {
         compile project(':common')
@@ -197,12 +202,6 @@ project(':2-app-driver-layer') {
 
 project(':common') {
     dependencies {
-        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${dockerComposeRuleVersion}"
-        compile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
-        runtime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
-        compileOnly "org.apiguardian:apiguardian-api:1.0.0"
-        compile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
-        compile "com.github.rholder:guava-retrying:${guavaRetryerVersion}"
-        compile "com.spotify:docker-client:${dockerClientVersion}"
+
     }
 }

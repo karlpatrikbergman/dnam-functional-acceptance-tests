@@ -40,10 +40,10 @@ class Layer1TestDataConfigurer extends Layer1TestFixtureRunner {
 
         log.info("######## {} beforeAll()", Layer1TestDataConfigurer.class.getSimpleName());
 
-        /**
-         * To be done before each test class:
-         * - configure nodes using xtm-rest-client-api
-         * - create application driver objects based on node configuration, for use in test implementation
+        /*
+          To be done before each test class:
+          - configure nodes using xtm-rest-client-api
+          - create application driver objects based on node configuration, for use in test implementation
          */
         applyNodeConfiguration();
         createAppDriverDomainObjects();

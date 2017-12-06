@@ -57,7 +57,7 @@ pipeline {
             }
             steps {
                 unstash 'assemble'
-                sh('./gradlew IntegrationTest')
+                sh('./gradlew integrationTest')
             }
             post {
                 always {
