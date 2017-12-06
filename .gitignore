@@ -93,3 +93,4 @@ fabric.properties
 /2-app-driver-layer/build/
 /0-acc-criteria-layer/build/
 /common/build/
+!/gradle/wrapper/gradle-wrapper.jar
