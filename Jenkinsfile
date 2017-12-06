@@ -44,7 +44,7 @@ pipeline {
             }
             post {
                 always {
-                    junit '**/build/test-results/junit-platform/TEST-*.xml'
+//                    junit '**/build/test-results/junit-platform/TEST-*.xml'
                     cleanWs()
                 }
             }
@@ -60,7 +60,7 @@ pipeline {
             }
             post {
                 always {
-                    junit '**/build/test-results/integrationTest/TEST-*.xml'
+//                    junit '**/build/test-results/integrationTest/TEST-*.xml'
                     cleanWs()
                 }
             }
