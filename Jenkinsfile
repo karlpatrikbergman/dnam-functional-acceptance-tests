@@ -58,7 +58,7 @@ pipeline {
                 label 'docker'
             }
             steps {
-                sh "docker network rm \$(docker network ls | grep \"dnam_func_accept\" | awk '/ / { print \$1 }')"
+//                sh "docker network rm \$(docker network ls | grep \"dnam_func_accept\" | awk '/ / { print \$1 }')"
                 unstash 'assemble'
                 sh('./gradlew integrationtest -PtestPackage=com.infinera.metro.test.acceptance.appdriver.dnam')
             }
