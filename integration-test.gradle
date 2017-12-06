@@ -17,10 +17,16 @@ task integrationTest(type: JavaExec, dependsOn: jar) {
     classpath = sourceSets.integrationTest.runtimeClasspath
     systemProperties['jar.path'] = jar.archivePath
 
+    def testPackage = "com.infinera.metro.test.acceptance"
+    if (project.hasProperty('testPackage') && project.hasProperty('testPackage') != "") {
+        testPackage = project.getProperty('testPackage')
+    }
+
     main 'org.junit.platform.console.ConsoleLauncher'
     args = ['--scan-classpath', sourceSets.integrationTest.output.classesDirs.asPath,
             '--reports-dir', "${buildDir}/test-results/integrationTest",
-            '--exclude-engine', 'junit-vintage'
+            '--exclude-engine', 'junit-vintage',
+            "--include-package", "${testPackage}"
     ]
 }
 
