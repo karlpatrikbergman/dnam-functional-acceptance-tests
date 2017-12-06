@@ -44,7 +44,7 @@ pipeline {
             }
             post {
                 always {
-                    junit '**/build/test-results/test/TEST-*.xml'
+                    junit '**/build/test-results/junit-platform/TEST-*.xml'
                     cleanWs()
                 }
             }
