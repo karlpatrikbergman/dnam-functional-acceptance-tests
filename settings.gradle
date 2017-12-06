@@ -1,5 +1,5 @@
 rootProject.name = 'dnam-functional-acceptance-tests'
-include '0-acc-criteria-layer'
+//include '0-acc-criteria-layer'
 include '1-test-impl-layer'
 include '2-app-driver-layer'
 include 'common'
