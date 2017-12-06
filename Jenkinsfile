@@ -1,5 +1,8 @@
 pipeline {
     agent none
+    parameters {
+        string(name: 'DNAM_VERSION', defaultValue: '30.0.0', description: 'DNAM-version for gradle dependencies')
+    }
     triggers {
         pollSCM('H/5 * * * *')
     }
@@ -21,7 +24,7 @@ pipeline {
             steps {
                 checkout scm
                 stash name: 'checkout', useDefaultExcludes: false
-                sh 'gradle assemble'
+                sh "gradle assemble -PdnamVersion=${params.DNAM_VERSION}"
                 stash name: 'assemble', useDefaultExcludes: false
             }
             post {
