@@ -21,14 +21,16 @@ public abstract class DnamRmiClient<T extends AbstractRequest, V extends Abstrac
 
     protected V process(T request) {
         try {
+            @SuppressWarnings("unchecked")
             V response = (V) session.process(request);
             if (response == null ||
                 response.getReturnCode() != AbstractResponse.RESPONSE_OK) {
+                final String responseString = (response == null) ? "null" : response.toString();
                 throw new RuntimeException("Retrieved an erroneous response for request: "
                     .concat(request.toString()
                     .concat("\n")
                     .concat("Response: ")
-                    .concat(response.toString())));
+                    .concat(responseString)));
             }
             return response;
         } catch (RemoteException e) {

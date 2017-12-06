@@ -4,8 +4,8 @@ import com.infinera.metro.dnam.acceptance.test.node.NodeAccessData;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.NodeConfiguration;
 import com.infinera.metro.dnam.acceptance.test.node.configuration.serializedeserialize.ObjectFromFileUtilJackson;
 import com.infinera.metro.networkmanager.tools.docker.DockerUtil;
+import com.infinera.metro.networkmanager.tools.wait.Wait;
 import com.infinera.metro.test.acceptance.appdriver.api.node.Node;
-import com.infinera.metro.test.acceptance.common.util.ExponentinalBackoff;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -46,6 +46,6 @@ class TempNodesConfig {
     }
 
     private String getDockerContainerIpAddress(String containerName) {
-        return new ExponentinalBackoff().perform(() -> DockerUtil.DOCKER_UTIL.getContainerIpAddress(containerName));
+        return new Wait().perform(() -> DockerUtil.DOCKER_UTIL.getContainerIpAddress(containerName));
     }
 }

@@ -18,15 +18,15 @@ ext.junitJupiterVersion = '5.0.2'
 ext.lombokVersion = '1.16.18'
 ext.slf4jVersion = '1.2.3'
 ext.logbackVersion = '1.2.3'
-ext.docker_compose_rule_version = "0.33.0"
+ext.dockerComposeRuleVersion = "0.33.0"
 ext.guavaRetryerVersion = "2.0.0"
-ext.docker_client_version = "8.9.2"
-ext.xtm_rest_client_version = "1.0.0f5bde5"
-ext.spring_version = "5.0.1.RELEASE"
-ext.http_client_version = "4.5.3"
-ext.stringtemplate_version = "4.0.2"
-ext.jackson_version = "2.9.1"
-
+ext.dockerClientVersion = "8.9.2"
+ext.xtmRestClientVersion = "1.0.3b37dd8"
+ext.springVersion = "5.0.1.RELEASE"
+ext.httpClientVersion = "4.5.3"
+ext.stringtemplateVersion = "4.0.2"
+ext.jacksonVersion = "2.9.1"
+ext.toolboxVersion = "1.0.5649c27"
 
 subprojects {
     group "com.infinera.metro.dnam.test.acceptance"
@@ -113,7 +113,7 @@ subprojects {
         compile "ch.qos.logback:logback-classic:${logbackVersion}"
         compile "org.projectlombok:lombok:${lombokVersion}"
 
-        compile "com.infinera.metro.networkmanager.tools:toolbox:1.0.61894d0"
+        compile "com.infinera.metro.networkmanager.tools:toolbox:${toolboxVersion}"
 
         testCompile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
         testRuntime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
@@ -146,17 +146,17 @@ project(':1-test-impl-layer') {
         compile "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
         compile "org.junit.platform:junit-platform-console-standalone:${junitPlatformVersion}"
 
-        compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-impl:${xtm_rest_client_version}")
-        compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-common:${xtm_rest_client_version}")
-        compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-configuration:${xtm_rest_client_version}")
+        compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-impl:${xtmRestClientVersion}")
+        compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-common:${xtmRestClientVersion}")
+        compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-configuration:${xtmRestClientVersion}")
 
         compile "commons-validator:commons-validator:1.6"
-        compile "org.springframework:spring-web:${spring_version}"
-        compile "org.apache.httpcomponents:httpclient:${http_client_version}"
-        compile "org.antlr:stringtemplate:${stringtemplate_version}"
-        compile "com.fasterxml.jackson.core:jackson-annotations:${jackson_version}"
-        compile "com.fasterxml.jackson.core:jackson-databind:${jackson_version}"
-        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
+        compile "org.springframework:spring-web:${springVersion}"
+        compile "org.apache.httpcomponents:httpclient:${httpClientVersion}"
+        compile "org.antlr:stringtemplate:${stringtemplateVersion}"
+        compile "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
+        compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${dockerComposeRuleVersion}"
     }
 }
 
@@ -183,7 +183,7 @@ project(':2-app-driver-layer') {
 
     dependencies {
         compile project(':common')
-        compile "org.springframework:spring-context:${spring_version}"
+        compile "org.springframework:spring-context:${springVersion}"
         compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final" //Fix unknown enum constant warning
         compile "se.transmode.tnm:rmiclient_if:${dnamVersion}"
         compile "se.transmode.tnm:model_lib:${dnamVersion}"
@@ -197,12 +197,12 @@ project(':2-app-driver-layer') {
 
 project(':common') {
     dependencies {
-        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${docker_compose_rule_version}"
+        compile "com.palantir.docker.compose:docker-compose-rule-junit4:${dockerComposeRuleVersion}"
         compile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
         runtime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
         compileOnly "org.apiguardian:apiguardian-api:1.0.0"
         compile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
         compile "com.github.rholder:guava-retrying:${guavaRetryerVersion}"
-        compile "com.spotify:docker-client:${docker_client_version}"
+        compile "com.spotify:docker-client:${dockerClientVersion}"
     }
 }

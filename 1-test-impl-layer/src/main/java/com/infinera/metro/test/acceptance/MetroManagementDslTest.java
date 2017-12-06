@@ -1,13 +1,13 @@
 package com.infinera.metro.test.acceptance;
 
 import com.infinera.metro.networkmanager.tools.docker.DockerUtil;
+import com.infinera.metro.networkmanager.tools.wait.Wait;
 import com.infinera.metro.test.acceptance.appdriver.api.RemoteServiceAccessData;
 import com.infinera.metro.test.acceptance.appdriver.api.node.Node;
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApi;
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApiFactory.NodeApiType;
 import com.infinera.metro.test.acceptance.appdriver.api.topology.TopologyApi;
 import com.infinera.metro.test.acceptance.appdriver.api.topology.TopologyApiFactory.TopologyApiType;
-import com.infinera.metro.test.acceptance.common.util.ExponentinalBackoff;
 import lombok.extern.slf4j.Slf4j;
 
 import static com.infinera.metro.test.acceptance.appdriver.api.node.NodeApiFactory.NODE_API_FACTORY;
@@ -38,6 +38,6 @@ public abstract class MetroManagementDslTest {
     }
 
     private static String getDockerContainerIpAddress(String containerName) {
-        return new ExponentinalBackoff().perform(() -> DockerUtil.DOCKER_UTIL.getContainerIpAddress(containerName));
+        return new Wait().perform(() -> DockerUtil.DOCKER_UTIL.getContainerIpAddress(containerName));
     }
 }

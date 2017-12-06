@@ -1,6 +1,6 @@
 package com.infinera.metro.test.acceptance.appdriver.dnam.rmi;
 
-import com.infinera.metro.test.acceptance.common.util.ExponentinalBackoff;
+import com.infinera.metro.networkmanager.tools.wait.Wait;
 import lombok.extern.slf4j.Slf4j;
 import se.transmode.tnm.rmiclient.server.rmiserver.Server;
 import se.transmode.tnm.rmiclient.server.rmiserver.ServerDefs;
@@ -26,9 +26,9 @@ class RmiConnection {
 
     private void createRmiSession() {
         log.info("Looking up remote Server stub...");
-        final Server server = new ExponentinalBackoff().perform(() -> rmiServiceFactory.lookupRemoteService(Server.class, ServerDefs.SERVER_RMI_NAME));
+        final Server server = new Wait().perform(() -> rmiServiceFactory.lookupRemoteService(Server.class, ServerDefs.SERVER_RMI_NAME));
 
         log.info("Creating rmi session...");
-        this.session = new ExponentinalBackoff().perform(() -> server.createSession(ServerSessionType.WEBAPP));
+        this.session = new Wait().perform(() -> server.createSession(ServerSessionType.WEBAPP));
     }
 }
