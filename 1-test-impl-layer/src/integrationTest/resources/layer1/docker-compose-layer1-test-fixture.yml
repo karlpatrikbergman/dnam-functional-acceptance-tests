@@ -14,7 +14,7 @@ services:
       - tnmdb
       - rabbitmq
     networks:
-      dnam_layer1:
+      dnam_func_accept_layer1:
   tnmdb:
     image: mariadb:10.1
     container_name: tnmdb
@@ -29,7 +29,7 @@ services:
     image: se-artif-prd.infinera.com/enlighten/rabbitmq:3.6.14
     container_name: rabbitmq
     networks:
-      dnam_layer1:
+      dnam_func_accept_layer1:
   node1:
     image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:30.0
     container_name: node1
@@ -39,7 +39,7 @@ services:
     ports:
       - 80
     networks:
-      dnam_layer1:
+      dnam_func_accept_layer1:
   node2:
     image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:30.0
     container_name: node2
@@ -47,9 +47,9 @@ services:
       - DEMO=true -nosim
     privileged: true
     networks:
-        dnam_layer1:
+        dnam_func_accept_layer1:
 networks:
-  dnam_layer1:
+  dnam_func_accept_layer1:
     driver: bridge
     ipam:
       config:

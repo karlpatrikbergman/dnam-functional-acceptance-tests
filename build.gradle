@@ -168,23 +168,23 @@ project(':1-test-impl-layer') {
 project(':2-app-driver-layer') {
     apply from: "../integration-test.gradle"
 
-    def dnamVersion = "30.0.0"
-//    task setDnamVersionToLatestPublished(type: Exec) {
-//        doFirst {
-//            workingDir 'scripts'
-//            standardOutput = new ByteArrayOutputStream()
-//        }
-//        commandLine './run-get-latest-version-published-to-tnm-libs-local.sh'
-//        doLast {
-//            dnamVersion = standardOutput.toString()
-//        }
-//    }
-//
-//    if (project.hasProperty('dnamVersion') && project.hasProperty('dnamVersion') != "") {
-//        dnamVersion = project.getProperty('dnamVersion')
-//    } else {
-//        setDnamVersionToLatestPublished.execute()
-//    }
+    def dnamVersion
+    task setDnamVersionToLatestPublished(type: Exec) {
+        doFirst {
+            workingDir 'scripts'
+            standardOutput = new ByteArrayOutputStream()
+        }
+        commandLine './run-get-latest-version-published-to-tnm-libs-local.sh'
+        doLast {
+            dnamVersion = standardOutput.toString()
+        }
+    }
+
+    if (project.hasProperty('dnamVersion') && project.hasProperty('dnamVersion') != "") {
+        dnamVersion = project.getProperty('dnamVersion')
+    } else {
+        setDnamVersionToLatestPublished.execute()
+    }
 
     dependencies {
         compile project(':common')

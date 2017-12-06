@@ -13,6 +13,8 @@ services:
     links:
       - tnmdb
       - rabbitmq
+    networks:
+      dnam_func_accept_smoke:
   tnmdb:
     image: mariadb:10.1
     container_name: tnmdb
@@ -21,6 +23,16 @@ services:
       MYSQL_PASSWORD: d4NaZ9j3k
       MYSQL_DATABASE: tnmdb
       MYSQL_ROOT_PASSWORD: root
+    networks:
+      dnam_func_accept_smoke:
   rabbitmq:
     image: se-artif-prd.infinera.com/enlighten/rabbitmq:3.6.14
     container_name: rabbitmq
+    networks:
+      dnam_func_accept_smoke:
+networks:
+  dnam_func_accept_smoke:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.55.0.0/24 # Allows for 255 addresses
