@@ -44,48 +44,78 @@ pipeline {
             }
             post {
                 always {
-//                    junit '**/build/test-results/junit-platform/TEST-*.xml'
+                    junit '**/build/test-results/junit-platform/TEST-*.xml'
                     cleanWs()
                 }
             }
 
         }
-        stage('Integration test') {
+        stage('Integration smoke tests') {
             agent {
                 label 'docker'
             }
             steps {
                 unstash 'assemble'
-                sh('./gradlew integrationTest')
+                sh('./gradlew integrationtest -PtestPackage=com.infinera.metro.test.acceptance.appdriver.dnam')
             }
             post {
                 always {
-//                    junit '**/build/test-results/integrationTest/TEST-*.xml'
+                    junit '**/build/test-results/integrationTest/TEST-*.xml'
                     cleanWs()
                 }
             }
         }
-        stage('Publish') {
+        stage('Functional Acceptance tests layer 1') {
             agent {
-                docker {
-                    label 'docker'
-                    image 'se-artif-prd.infinera.com/gradle:4.3.1'
-                }
+                label 'docker'
             }
             steps {
                 unstash 'assemble'
-                script {
-                    GIT_COMMIT = sh (script: 'git --no-pager show -s --format=\'%h\'', returnStdout: true).trim().take(7)
-                    withEnv(["TAG=1.0.0-$GIT_COMMIT"]) {
-                        sh "./gradlew artifactoryPublish -PpartOfLatestCommitHash=$GIT_COMMIT"
-                    }
-                }
+                sh('./gradlew integrationTest -PtestPackage=com.infinera.metro.test.acceptance.layer1')
             }
             post {
                 always {
+                    junit '**/build/test-results/integrationTest/TEST-*.xml'
                     cleanWs()
                 }
             }
         }
+        stage('Functional Acceptance tests layer 2') {
+            agent {
+                label 'docker'
+            }
+            steps {
+                unstash 'assemble'
+                sh('./gradlew integrationTest -PtestPackage=com.infinera.metro.test.acceptance.layer2')
+            }
+            post {
+                always {
+                    junit '**/build/test-results/integrationTest/TEST-*.xml'
+                    cleanWs()
+                }
+            }
+        }
+//        stage('Publish') {
+//            agent {
+//                docker {
+//                    label 'docker'
+//                    image 'se-artif-prd.infinera.com/gradle:4.3.1'
+//                }
+//            }
+//            steps {
+//                unstash 'assemble'
+//                script {
+//                    GIT_COMMIT = sh (script: 'git --no-pager show -s --format=\'%h\'', returnStdout: true).trim().take(7)
+//                    withEnv(["TAG=1.0.0-$GIT_COMMIT"]) {
+//                        sh "./gradlew artifactoryPublish -PpartOfLatestCommitHash=$GIT_COMMIT"
+//                    }
+//                }
+//            }
+//            post {
+//                always {
+//                    cleanWs()
+//                }
+//            }
+//        }
     }
 }
