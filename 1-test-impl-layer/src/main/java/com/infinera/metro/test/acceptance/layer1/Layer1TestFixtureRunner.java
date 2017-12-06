@@ -25,7 +25,19 @@ class Layer1TestFixtureRunner implements BeforeAllCallback, AfterAllCallback, Pa
 
             log.info("######## {} beforeAll()", Layer1TestFixtureRunner.class.getSimpleName());
 
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> docker.after()));
+            Thread dockerAfterThread = new Thread(){
+                public void run(){
+                    if(docker != null) {
+                        docker.after();
+                    } else {
+                        log.error("Failed to add shutdown hook. Field 'docker' was null");
+                    }
+                }
+            };
+            Runtime runtime = Runtime.getRuntime();
+            runtime.addShutdownHook(dockerAfterThread);
+
+//            Runtime.getRuntime().addShutdownHook(new Thread(() -> docker.after()));
 
             docker = DockerComposeRule.builder()
 //                .pullOnStartup(true)
