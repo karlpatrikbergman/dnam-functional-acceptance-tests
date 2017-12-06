@@ -43,7 +43,7 @@ pipeline {
             }
             steps {
                 unstash 'assemble'
-                sh 'gradle test'
+                sh "gradle test -PdnamVersion=${params.DNAM_VERSION}"
             }
             post {
                 always {
@@ -59,11 +59,11 @@ pipeline {
             }
             steps {
                 unstash 'assemble'
-                sh('./gradlew integrationtest -PtestPackage=com.infinera.metro.test.acceptance.appdriver.dnam')
+                sh "./gradlew integrationtest -PtestPackage=com.infinera.metro.test.acceptance.appdriver.dnam -PdnamVersion=${params.DNAM_VERSION}"
             }
             post {
                 always {
-                    junit '**/build/test-results/integrationTest/TEST-*.xml'
+//                    junit '**/build/test-results/integrationTest/TEST-*.xml'
                     cleanWs()
                 }
             }
@@ -74,7 +74,7 @@ pipeline {
             }
             steps {
                 unstash 'assemble'
-                sh('./gradlew integrationTest -PtestPackage=com.infinera.metro.test.acceptance.layer1')
+                sh "./gradlew integrationTest -PtestPackage=com.infinera.metro.test.acceptance.layer1 -PdnamVersion=${params.DNAM_VERSION}"
             }
             post {
                 always {
@@ -89,7 +89,7 @@ pipeline {
             }
             steps {
                 unstash 'assemble'
-                sh('./gradlew integrationTest -PtestPackage=com.infinera.metro.test.acceptance.layer2')
+                sh "./gradlew integrationTest -PtestPackage=com.infinera.metro.test.acceptance.layer2 -PdnamVersion=${params.DNAM_VERSION}"
             }
             post {
                 always {
