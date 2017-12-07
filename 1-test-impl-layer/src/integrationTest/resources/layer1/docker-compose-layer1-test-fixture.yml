@@ -1,4 +1,5 @@
-versionerroneousvices:
+version: "3"
+services:
   dnam-mainserver:
     image: se-artif-prd.infinera.com/enlighten/tnmserver:30.0.0
     ports:
@@ -13,7 +14,7 @@ versionerroneousvices:
       - tnmdb
       - rabbitmq
     networks:
-      dnam_func_accept_layer1:
+      dnam_func_acc_test_layer1:
   tnmdb:
     image: mariadb:10.1
     container_name: tnmdb
@@ -23,12 +24,12 @@ versionerroneousvices:
       MYSQL_DATABASE: tnmdb
       MYSQL_ROOT_PASSWORD: root
     networks:
-      dnam_func_accept_layer1:
+      dnam_func_acc_test_layer1:
   rabbitmq:
     image: se-artif-prd.infinera.com/enlighten/rabbitmq:3.6.14
     container_name: rabbitmq
     networks:
-      dnam_func_accept_layer1:
+      dnam_func_acc_test_layer1:
   node1:
     image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:30.0
     container_name: node1
@@ -38,7 +39,7 @@ versionerroneousvices:
     ports:
       - 80
     networks:
-      dnam_func_accept_layer1:
+      dnam_func_acc_test_layer1:
   node2:
     image: se-artif-prd.infinera.com/tm3k/trunk-hostenv:30.0
     container_name: node2
@@ -46,9 +47,9 @@ versionerroneousvices:
       - DEMO=true -nosim
     privileged: true
     networks:
-        dnam_func_accept_layer1:
+        dnam_func_acc_test_layer1:
 networks:
-  dnam_func_accept_layer1:
+  dnam_func_acc_test_layer1:
     driver: bridge
     ipam:
       config:

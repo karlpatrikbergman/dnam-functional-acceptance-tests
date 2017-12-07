@@ -23,22 +23,22 @@ class Layer1TestFixtureRunner implements BeforeAllCallback, AfterAllCallback, Pa
     public void beforeAll(ExtensionContext extensionContext) throws Exception {
         if (docker == null) {
 
-            log.info("######## {} beforeAll()", Layer1TestFixtureRunner.class.getSimpleName());
+            log.info("######## {} beforeAll() start", Layer1TestFixtureRunner.class.getSimpleName());
 
-            Thread dockerAfterThread = new Thread(){
-                public void run(){
-                    if(docker != null) {
-                        log.info("######## Running docker after (shutdown hook)");
-                        docker.after();
-                    } else {
-                        log.error("Failed to add shutdown hook. Field 'docker' was null");
-                    }
-                }
-            };
-            Runtime runtime = Runtime.getRuntime();
-            runtime.addShutdownHook(dockerAfterThread);
+//            Thread dockerAfterThread = new Thread(){
+//                public void run(){
+//                    if(docker != null) {
+//                        log.info("######## Running docker after (shutdown hook)");
+//                        docker.after();
+//                    } else {
+//                        log.error("Failed to add shutdown hook. Field 'docker' was null");
+//                    }
+//                }
+//            };
+//            Runtime runtime = Runtime.getRuntime();
+//            runtime.addShutdownHook(dockerAfterThread);
 
-//            Runtime.getRuntime().addShutdownHook(new Thread(() -> docker.after()));
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> docker.after()));
 
             docker = DockerComposeRule.builder()
 //                .pullOnStartup(true)
@@ -48,6 +48,8 @@ class Layer1TestFixtureRunner implements BeforeAllCallback, AfterAllCallback, Pa
                 .shutdownStrategy(ShutdownStrategy.GRACEFUL)
                 .build();
             docker.before();
+
+            log.info("######## {} beforeAll() end", Layer1TestFixtureRunner.class.getSimpleName());
         }
     }
 
