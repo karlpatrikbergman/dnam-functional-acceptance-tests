@@ -69,7 +69,7 @@ pipeline {
             }
             post {
                 always {
-//                    junit '**/build/test-results/integrationTest/TEST-*.xml'
+                    junit '**/test-report/TEST-*.xml'
                     cleanWs()
                 }
             }
@@ -90,7 +90,7 @@ pipeline {
             }
             post {
                 always {
-//                    junit '**/build/test-results/integrationTest/TEST-*.xml'
+                    junit '**/test-report/TEST-*.xml'
                     cleanWs()
                 }
             }
