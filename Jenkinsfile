@@ -96,4 +96,11 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            node('docker') {
+                step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: emailextrecipients([[$class: 'CulpritsRecipientProvider'], [$class: 'RequesterRecipientProvider']])])
+            }
+        }
+    }
 }
