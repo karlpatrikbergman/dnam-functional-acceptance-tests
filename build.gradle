@@ -26,7 +26,7 @@ ext.springVersion = "5.0.1.RELEASE"
 ext.httpClientVersion = "4.5.3"
 ext.stringtemplateVersion = "4.0.2"
 ext.jacksonVersion = "2.9.1"
-ext.toolboxVersion = "1.0.5649c27"
+ext.toolboxVersion = "1.0.a2887fb"
 ext.jsoupVersion = "1.11.2"
 
 subprojects {
