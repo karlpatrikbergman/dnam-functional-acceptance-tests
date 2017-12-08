@@ -59,8 +59,7 @@ pipeline {
             }
             steps {
                 unstash 'assemble'
-                sh "export TEST_PACKAGE=layer1"
-                sh "docker-compose " +
+                sh "export TEST_PACKAGE=layer1; docker-compose " +
                         "-f 1-test-impl-layer/docker-compose-layer1-test-fixture.yml " +
                         "-f 1-test-impl-layer/docker-compose-dnam-func-acc-test.yml up " +
                         "--abort-on-container-exit"
@@ -81,8 +80,7 @@ pipeline {
             }
             steps {
                 unstash 'assemble'
-                sh "export TEST_PACKAGE=layer2"
-                sh "docker-compose " +
+                sh "export TEST_PACKAGE=layer2; docker-compose " +
                         "-f 1-test-impl-layer/docker-compose-layer1-test-fixture.yml " +
                         "-f 1-test-impl-layer/docker-compose-dnam-func-acc-test.yml up " +
                         "--abort-on-container-exit"
