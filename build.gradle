@@ -133,11 +133,11 @@ project(':1-test-impl-layer') {
 //    apply from: "../integration-test.gradle"
 
     task copyTestRuntimeLibs(type: Copy) {
-        dependsOn build
+        dependsOn assemble
         from configurations.testRuntime
         into "build/libs"
     }
-    build.finalizedBy(copyTestRuntimeLibs)
+    assemble.finalizedBy(copyTestRuntimeLibs)
 
     dependencies {
         compile project(':2-app-driver-layer')
