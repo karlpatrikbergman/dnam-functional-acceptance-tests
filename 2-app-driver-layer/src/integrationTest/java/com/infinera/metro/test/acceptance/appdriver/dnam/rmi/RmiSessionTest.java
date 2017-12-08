@@ -3,8 +3,6 @@ package com.infinera.metro.test.acceptance.appdriver.dnam.rmi;
 import com.infinera.metro.test.acceptance.appdriver.dnam.DnamAppdriverTestFixture;
 import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.connection.DockerPort;
-import com.spotify.docker.client.exceptions.DockerCertificateException;
-import com.spotify.docker.client.exceptions.DockerException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -26,7 +24,7 @@ class RmiSessionTest {
 
     @DisplayName("Get session should return rmi session")
     @Test
-    void getRmiSessionTest(DockerComposeRule docker) throws DockerCertificateException, DockerException, InterruptedException {
+    void getRmiSessionTest(DockerComposeRule docker) {
         DockerPort dnamServerContainer = docker.containers().container("dnam-mainserver").port(1099);
         String url = dnamServerContainer.inFormat("$HOST:$EXTERNAL_PORT");
         log.info("DNA-M rmi server: {}", url);

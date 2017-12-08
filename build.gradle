@@ -53,6 +53,9 @@ subprojects {
                 include 'junit-jupiter'
                 exclude 'junit-vintage'
             }
+            tags {
+                include 'fast'
+            }
         }
     }
 
@@ -127,7 +130,7 @@ subprojects {
 
 
 project(':1-test-impl-layer') {
-    apply from: "../integration-test.gradle"
+//    apply from: "../integration-test.gradle"
 
     task copyTestRuntimeLibs(type: Copy) {
         dependsOn build
@@ -139,14 +142,11 @@ project(':1-test-impl-layer') {
     dependencies {
         compile project(':2-app-driver-layer')
 
-
-        compile "org.jsoup:jsoup:${jsoupVersion}"
+        compile "org.apache.ant:ant-junit:1.10.1"
 
         compile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
         runtime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
-
         compileOnly "org.apiguardian:apiguardian-api:1.0.0"
-
         compile "org.junit.platform:junit-platform-suite-api:${junitPlatformVersion}"
         compile "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
         compile "org.junit.platform:junit-platform-console-standalone:${junitPlatformVersion}"
@@ -155,6 +155,7 @@ project(':1-test-impl-layer') {
         compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-common:${xtmRestClientVersion}")
         compile("com.infinera.metro.dnam.test.acceptance:xtm-rest-client-configuration:${xtmRestClientVersion}")
 
+        compile "org.jsoup:jsoup:${jsoupVersion}"
         compile "commons-validator:commons-validator:1.6"
         compile "org.springframework:spring-web:${springVersion}"
         compile "org.apache.httpcomponents:httpclient:${httpClientVersion}"

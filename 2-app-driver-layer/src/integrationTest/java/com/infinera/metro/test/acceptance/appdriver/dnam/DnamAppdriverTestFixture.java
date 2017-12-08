@@ -25,7 +25,7 @@ public class DnamAppdriverTestFixture implements BeforeAllCallback, AfterAllCall
 
     }
 
-    public void afterAll(ExtensionContext extensionContext) throws Exception {
+    public void afterAll(ExtensionContext extensionContext) {
 
     }
 

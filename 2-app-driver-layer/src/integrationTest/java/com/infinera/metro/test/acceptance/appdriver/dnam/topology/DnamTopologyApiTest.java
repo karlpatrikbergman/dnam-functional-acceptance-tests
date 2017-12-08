@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @Tag("DnamApplicationDriverTest")
 @DisplayName("DnamTopologyApiTest")
 @Slf4j
-public class DnamTopologyApiTest {
+class DnamTopologyApiTest {
 
     @Test
     void test()  {

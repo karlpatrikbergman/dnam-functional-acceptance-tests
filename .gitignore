@@ -94,3 +94,4 @@ fabric.properties
 /0-acc-criteria-layer/build/
 /common/build/
 !/gradle/wrapper/gradle-wrapper.jar
+/dnam-functional-acceptance-tests.iml

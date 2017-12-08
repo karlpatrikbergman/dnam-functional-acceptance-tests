@@ -5,11 +5,10 @@ import se.transmode.tnm.rmiclient.server.services.connections.topology.PeerComEn
 
 import java.util.StringJoiner;
 
-public class DnamTopologyUtil {
+class DnamTopologyUtil {
 
 
     public static PeerComEntry createPeerComEntry(String description, AbstractPort localPort, AbstractPort remotePort) {
-        String theDescr = description;
         String theLocalIp = localPort.getAddress();
         int theLocalSubrack = localPort.getSubrack();
         int theLocalSlot = localPort.getSlot();
@@ -33,15 +32,6 @@ public class DnamTopologyUtil {
         int theRemotePort = 0;
 
 
-        /**
-         * From DNA-M user guide:
-         * The Local Label setting controls naming of the Local Labels on peer connections in the DNA-M. The
-         * two available choices (board name or node name), decides how the default name of these labels
-         * are constructed.
-         *
-         * Local label A unique identifier for the interface in each node.
-         */
-
         //localLabel=tp10g:1:2:2,
         //remoteLabel=tp10g:1:2:1,
 
@@ -53,7 +43,7 @@ public class DnamTopologyUtil {
 
         int theLinkAttenuation = 0;             //Where get this?
 
-        return new PeerComEntry(theDescr, theLocalIp, theLocalSubrack, theLocalSlot, theLocalInterfaceNumber, theLocalPort, theRemoteIp, theRemoteSubrack, theRemoteSlot, theRemoteInterfaceNumber, theRemotePort, theLocalLabel, theRemoteLabel, theLinkAttenuation);
+        return new PeerComEntry(description, theLocalIp, theLocalSubrack, theLocalSlot, theLocalInterfaceNumber, theLocalPort, theRemoteIp, theRemoteSubrack, theRemoteSlot, theRemoteInterfaceNumber, theRemotePort, theLocalLabel, theRemoteLabel, theLinkAttenuation);
     }
 
     private static String createLabel(String boardName, int subrack, int slot, int port) {

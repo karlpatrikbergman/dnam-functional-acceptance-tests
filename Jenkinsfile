@@ -53,28 +53,20 @@ pipeline {
             }
 
         }
-        stage('Integration smoke tests') {
-            agent {
-                label 'docker'
-            }
-            steps {
-                unstash 'assemble'
-                sh "./gradlew integrationtest -PtestPackage=com.infinera.metro.test.acceptance.appdriver.dnam -PdnamVersion=${params.DNAM_VERSION}"
-            }
-            post {
-                always {
-//                    junit '**/build/test-results/integrationTest/TEST-*.xml'
-                    cleanWs()
-                }
-            }
-        }
         stage('Functional Acceptance tests layer 1') {
             agent {
                 label 'docker'
             }
             steps {
                 unstash 'assemble'
-                sh "./gradlew integrationTest -PtestPackage=com.infinera.metro.test.acceptance.layer1 -PdnamVersion=${params.DNAM_VERSION}"
+                sh "export TEST_PACKAGE=layer1"
+                sh "docker-compose " +
+                        "-f 1-test-impl-layer/docker-compose-layer1-test-fixture.yml " +
+                        "-f 1-test-impl-layer/docker-compose-dnam-func-acc-test.yml up " +
+                        "--abort-on-container-exit"
+                sh "docker-compose " +
+                        "-f 1-test-impl-layer/docker-compose-layer1-test-fixture.yml " +
+                        "-f 1-test-impl-layer/docker-compose-dnam-func-acc-test.yml rm -fv"
             }
             post {
                 always {
@@ -89,36 +81,21 @@ pipeline {
             }
             steps {
                 unstash 'assemble'
-                sh "./gradlew integrationTest -PtestPackage=com.infinera.metro.test.acceptance.layer2 -PdnamVersion=${params.DNAM_VERSION}"
+                sh "export TEST_PACKAGE=layer2"
+                sh "docker-compose " +
+                        "-f 1-test-impl-layer/docker-compose-layer1-test-fixture.yml " +
+                        "-f 1-test-impl-layer/docker-compose-dnam-func-acc-test.yml up " +
+                        "--abort-on-container-exit"
+                sh "docker-compose " +
+                        "-f 1-test-impl-layer/docker-compose-layer1-test-fixture.yml " +
+                        "-f 1-test-impl-layer/docker-compose-dnam-func-acc-test.yml rm -fv"
             }
             post {
                 always {
-                    junit '**/build/test-results/integrationTest/TEST-*.xml'
+//                    junit '**/build/test-results/integrationTest/TEST-*.xml'
                     cleanWs()
                 }
             }
         }
-//        stage('Publish') {
-//            agent {
-//                docker {
-//                    label 'docker'
-//                    image 'se-artif-prd.infinera.com/gradle:4.3.1'
-//                }
-//            }
-//            steps {
-//                unstash 'assemble'
-//                script {
-//                    GIT_COMMIT = sh (script: 'git --no-pager show -s --format=\'%h\'', returnStdout: true).trim().take(7)
-//                    withEnv(["TAG=1.0.0-$GIT_COMMIT"]) {
-//                        sh "./gradlew artifactoryPublish -PpartOfLatestCommitHash=$GIT_COMMIT"
-//                    }
-//                }
-//            }
-//            post {
-//                always {
-//                    cleanWs()
-//                }
-//            }
-//        }
     }
 }

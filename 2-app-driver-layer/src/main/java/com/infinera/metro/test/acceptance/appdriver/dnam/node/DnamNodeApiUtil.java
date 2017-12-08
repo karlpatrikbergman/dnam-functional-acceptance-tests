@@ -18,9 +18,9 @@ import se.transmode.tnm.rmiclient.server.services.discovery.NodeEntry;
 import se.transmode.tnm.rmiclient.server.services.discovery.NodeEntryFactory;
 import se.transmode.tnm.rmiclient.server.services.discovery.SubnetEntry;
 
-import java.util.Arrays;
+import java.util.Collections;
 
-public class DnamNodeApiUtil {
+class DnamNodeApiUtil {
     static NodeEntry getDefaultNodeEntry(String nodeIp) {
 
 
@@ -55,7 +55,7 @@ public class DnamNodeApiUtil {
                 FtpLoginDetails.EMPTY,
                 EnmLoginDetails.EMPTY,
                 "Network",
-                Arrays.asList(defaultSubnet),
+                Collections.singletonList(defaultSubnet),
                 "",
                 "",
                 IpTableStatus.UNKNOWN,

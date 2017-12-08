@@ -1,0 +1,19 @@
+version: "3"
+services:
+  dnam-acceptance-test:
+    image: dnam-acceptance-test:latest
+    build: .
+    container_name: dnam-acceptance-test
+    volumes:
+      # Path on the host, relative to the Compose file
+      - ./test-report:/test-report
+    networks:
+      dnam_func_acc_test_layer1:
+    depends_on:
+      - dnam-mainserver
+      - node1
+      - node2
+    links:
+        - dnam-mainserver
+    entrypoint: ./wait-for-it.sh
+    command: dnam-mainserver:1099 --timeout=300 --strict -- ./run-dnam-functional-acceptance-tests.sh ${TEST_PACKAGE}

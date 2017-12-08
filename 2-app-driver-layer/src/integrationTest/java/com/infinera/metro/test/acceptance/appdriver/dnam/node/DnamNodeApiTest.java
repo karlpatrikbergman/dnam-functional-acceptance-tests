@@ -6,8 +6,6 @@ import com.infinera.metro.test.acceptance.appdriver.api.RemoteServiceAccessData;
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApi;
 import com.infinera.metro.test.acceptance.appdriver.api.node.NodeApiFactory;
 import com.infinera.metro.test.acceptance.appdriver.dnam.DnamAppdriverTestFixture;
-import com.spotify.docker.client.exceptions.DockerCertificateException;
-import com.spotify.docker.client.exceptions.DockerException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -24,7 +22,7 @@ class DnamNodeApiTest {
 
     @DisplayName("Get DnamNodeApi should return instance of DnamNodeApi")
     @Test
-    void test() throws DockerCertificateException, DockerException, InterruptedException {
+    void test() {
         String ipAddress = new Wait().perform(() -> DockerUtil.DOCKER_UTIL.getContainerIpAddress("dnam-mainserver"));
         NodeApi nodeApi = NodeApiFactory.NODE_API_FACTORY.getNodeApi(NodeApiFactory.NodeApiType.DNAM, new RemoteServiceAccessData(ipAddress, 1099));
         assertNotNull(nodeApi);

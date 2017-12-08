@@ -30,7 +30,7 @@ public class DnamTopologyApi extends DnamRmiClient<TopoRequest, TopoResponse> im
     public void createPeerConnection(Port transmitPort, Port receivePort) {
 
         final com.google.common.base.Predicate<Collection<NodeTopologyData>> portsCollectionIsEmpty =
-            nodeTopologyDataCollection -> nodeTopologyDataCollection.iterator().next().getPorts().isEmpty();
+            nodeTopologyDataCollection -> Objects.requireNonNull(nodeTopologyDataCollection).iterator().next().getPorts().isEmpty();
 
         final NodeTopologyData transmitNodeTopologydata = getNodeTopology(transmitPort.getNode().getIpAddress(), portsCollectionIsEmpty);
         final AbstractPort abstractPortTransmit = getAbstractPortTransmit(transmitPort, transmitNodeTopologydata);
@@ -53,7 +53,7 @@ public class DnamTopologyApi extends DnamRmiClient<TopoRequest, TopoResponse> im
 
     public Peer getPeer(Port port) {
         final com.google.common.base.Predicate<Collection<NodeTopologyData>> peersCollectionIsEmpty =
-            nodeTopologyDataCollection -> nodeTopologyDataCollection.iterator().next().getPeers().isEmpty();
+            nodeTopologyDataCollection -> Objects.requireNonNull(nodeTopologyDataCollection).iterator().next().getPeers().isEmpty();
 
         final NodeTopologyData nodeTopologyData = getNodeTopology(port.getNode().getIpAddress(), peersCollectionIsEmpty);
 

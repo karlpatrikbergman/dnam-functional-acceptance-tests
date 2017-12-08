@@ -11,6 +11,6 @@ class Layer2ServiceTest {
     @Test
     @DisplayName("Some layer2 use case test")
     void layer2UseCaseTest() {
-        log.info("Running some layer2 use case test");
+        log.info("Running some layer2 use case test GURKA");
     }
 }

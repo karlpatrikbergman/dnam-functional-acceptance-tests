@@ -12,9 +12,7 @@ import com.infinera.metro.test.acceptance.appdriver.api.topology.Port;
 import com.palantir.docker.compose.DockerComposeRule;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.ParameterContext;
-import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,14 +27,13 @@ import static com.infinera.metro.test.acceptance.MetroManagementDslTest.*;
  * The reason for reusing the test fixture is the long startup time of dnam-mainserver.
  */
 @Slf4j
-class Layer1TestDataConfigurer extends Layer1TestFixtureRunner {
+class Layer1TestDataConfigurer implements BeforeAllCallback, AfterAllCallback, ParameterResolver {
 
     private static NodeConfiguration nodeConfiguration; //Don't leak to test implementation!
     @Getter private static Port nodeALinePort;
     @Getter private static Port nodeZLinePort;
 
-    public void beforeAll(ExtensionContext extensionContext) throws Exception {
-        super.beforeAll(extensionContext);
+    public void beforeAll(ExtensionContext extensionContext) {
 
         log.info("######## {} beforeAll()", Layer1TestDataConfigurer.class.getSimpleName());
 
@@ -91,14 +88,12 @@ class Layer1TestDataConfigurer extends Layer1TestFixtureRunner {
             .build();
     }
 
-    public void afterAll(ExtensionContext extensionContext) throws Exception {
-        super.afterAll(extensionContext);
+    public void afterAll(ExtensionContext extensionContext) {
 
         log.info("######## {} afterAll()", Layer1TestDataConfigurer.class.getSimpleName());
 
         log.info("######## Deleting node configuration");
         nodeConfiguration.delete();
-
 
         log.info("######## Removing nodes from Network Manager (System under test");
         nodeApi.deleteNode(node1);

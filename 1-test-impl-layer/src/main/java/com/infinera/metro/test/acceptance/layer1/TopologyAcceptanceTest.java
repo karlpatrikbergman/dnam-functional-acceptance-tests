@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith(Layer1TestDataConfigurer.class)
 @DisplayName("TopologyAcceptanceTest")
 @Slf4j
-class TopologyAccfeptanceTest extends MetroManagementDslTest {
+class TopologyAcceptanceTest extends MetroManagementDslTest {
 
     @DisplayName("Create peer connection and verify it was created")
     @Test
