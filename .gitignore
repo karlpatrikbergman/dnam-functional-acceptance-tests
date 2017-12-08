@@ -95,3 +95,4 @@ fabric.properties
 /common/build/
 !/gradle/wrapper/gradle-wrapper.jar
 /dnam-functional-acceptance-tests.iml
+/1-test-impl-layer/test-report/
