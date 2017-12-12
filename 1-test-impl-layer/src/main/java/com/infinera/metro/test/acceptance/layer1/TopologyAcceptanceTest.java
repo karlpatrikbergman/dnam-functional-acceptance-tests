@@ -38,5 +38,8 @@ class TopologyAcceptanceTest extends MetroManagementDslTest {
         Port peer = topologyApi.getPeer(nodeALinePort);
 
         assertNotNull(peer);
+
+//        nodeApi.deleteNode(node1);
+//        nodeApi.deleteNode(node2);
     }
 }

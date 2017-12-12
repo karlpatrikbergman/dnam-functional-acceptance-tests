@@ -38,7 +38,7 @@ elif [ "$#" -ne 1 ]; then
     printf "Usage: ${FUNCNAME[0]} <test-package>\n"  >&2
     exit 1
 else
-    printf "Running ddd: ${FUNCNAME[0]} ${1}\n"
+    printf "Running: ${FUNCNAME[0]} ${1}\n"
     run_tests "${1}"
 fi
 

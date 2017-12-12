@@ -21,12 +21,12 @@ ext.logbackVersion = '1.2.3'
 ext.dockerComposeRuleVersion = "0.33.0"
 ext.guavaRetryerVersion = "2.0.0"
 ext.dockerClientVersion = "8.9.2"
-ext.xtmRestClientVersion = "1.0.3b37dd8"
+ext.xtmRestClientVersion = "1.0.30c38ed"
 ext.springVersion = "5.0.1.RELEASE"
 ext.httpClientVersion = "4.5.3"
 ext.stringtemplateVersion = "4.0.2"
 ext.jacksonVersion = "2.9.1"
-ext.toolboxVersion = "1.0.a2887fb"
+ext.toolboxVersion = "1.0.15dfa5a" //1.0.15dfa5a
 ext.jsoupVersion = "1.11.2"
 
 subprojects {
@@ -142,7 +142,10 @@ project(':1-test-impl-layer') {
     dependencies {
         compile project(':2-app-driver-layer')
 
-        compile "org.apache.ant:ant-junit:1.10.1"
+//        compile "com.jayway.restassured:rest-assured:2.9.0"
+        compile "io.rest-assured:rest-assured:3.0.6"
+
+        compile "org.apache.ant:ant-junit:1.10.1" //TODO: Not needed?
 
         compile "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
         runtime "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
@@ -188,7 +191,6 @@ project(':2-app-driver-layer') {
     }
 
     dependencies {
-        compile project(':common')
         compile "org.springframework:spring-context:${springVersion}"
         compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final" //Fix unknown enum constant warning
         compile "se.transmode.tnm:rmiclient_if:${dnamVersion}"
@@ -198,11 +200,5 @@ project(':2-app-driver-layer') {
         compile "se.transmode:tm_common_lib:${dnamVersion}"
         compile "se.transmode.tnm:common_if:${dnamVersion}"
         compile "se.transmode.tnm:action_api:${dnamVersion}"
-    }
-}
-
-project(':common') {
-    dependencies {
-
     }
 }

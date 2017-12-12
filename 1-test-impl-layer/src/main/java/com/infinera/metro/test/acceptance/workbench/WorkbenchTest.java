@@ -12,28 +12,6 @@ import java.nio.file.Paths;
 @Slf4j
 class WorkbenchTest {
 
-//    @Disabled
-//    @Test
-//    @DisplayName("Some workbench test")
-//    void workbenchTest() throws InterruptedException, DockerException, DockerCertificateException {
-//        log.info("Running some workbench test");
-//        logContainerIp("node1");
-//        logContainerIp("dnam-mainserver");
-//    }
-//
-//    private void logContainerIp(String containerName) throws InterruptedException, DockerException, DockerCertificateException {
-//        log.info("{} ip: {}", containerName, DockerUtil.DOCKER_UTIL.getContainerIpAddress(containerName));
-//    }
-
-//    @Test
-//    void getIpAddressTest() throws UnknownHostException {
-//        logContainerIp("node1");
-//    }
-//
-//    private void logContainerIp(String containerName) throws UnknownHostException {
-//        log.info("{} ip: {}", containerName, InetAddress.getByName("node1").getHostAddress());
-//    }
-
     @Test
     void runningInDockerContainerTest() {
         Path path = Paths.get("/.dockerenv");

@@ -1,12 +1,12 @@
 ---
 nodeAccessDataMap:
-  node1:
-    ipAddress: "172.35.0.5"
+  nodeA:
+    ipAddress: "172.55.0.2"
     port: 80
     userName: "root"
     password: "root"
-  node2:
-    ipAddress: "172.35.0.3"
+  nodeZ:
+    ipAddress: "172.55.0.3"
     port: 80
     userName: "root"
     password: "root"
@@ -57,12 +57,7 @@ nodeEquipmentMap:
       clientPorts:
       - transmitPort: 41
         receivePort: 42
-        clientPortAttributes:
-        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
-          clientPortSetAttributes:
-            attributes:
-            - key: "descr"
-              value: "My description"
+        clientPortAttributes: []
       linePorts:
       - transmitPort: 81
         receivePort: 82
@@ -118,12 +113,7 @@ nodeEquipmentMap:
       clientPorts:
       - transmitPort: 41
         receivePort: 42
-        clientPortAttributes:
-        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
-          clientPortSetAttributes:
-            attributes:
-            - key: "descr"
-              value: "My description"
+        clientPortAttributes: []
       linePorts:
       - transmitPort: 81
         receivePort: 82
@@ -133,3 +123,105 @@ nodeEquipmentMap:
             attributes:
             - key: "descr"
               value: "My description"
+#internalConnectionMap:
+#  nodeA:
+#  - fromPeer:
+#      subrack: "subrack1"
+#      slot: "slot2"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 3
+#    toPeer:
+#      subrack: "subrack1"
+#      slot: "slot3"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 42
+#  - fromPeer:
+#      subrack: "subrack1"
+#      slot: "slot3"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 41
+#    toPeer:
+#      subrack: "subrack1"
+#      slot: "slot2"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 4
+#  nodeZ:
+#  - fromPeer:
+#      subrack: "subrack1"
+#      slot: "slot2"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 3
+#    toPeer:
+#      subrack: "subrack1"
+#      slot: "slot3"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 42
+#  - fromPeer:
+#      subrack: "subrack1"
+#      slot: "slot3"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 41
+#    toPeer:
+#      subrack: "subrack1"
+#      slot: "slot2"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 4
+#peerConnectionMap:
+#  nodeA_nodeZ:
+#  - localPeer:
+#      subrack: "subrack1"
+#      slot: "slot3"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 81
+#    remotePeer:
+#      subrack: "subrack1"
+#      slot: "slot3"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 82
+#  nodeZ_nodeA:
+#  - localPeer:
+#      subrack: "subrack1"
+#      slot: "slot3"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 81
+#    remotePeer:
+#      subrack: "subrack1"
+#      slot: "slot3"
+#      mpoIdentifier:
+#        xtmVersionEqualOrHigherThan27: true
+#        mpoPort: 0
+#        mtoIdentifier: ":0"
+#      port: 82

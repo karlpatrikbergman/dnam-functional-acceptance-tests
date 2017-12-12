@@ -96,3 +96,4 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 /dnam-functional-acceptance-tests.iml
 /1-test-impl-layer/test-report/
+/1-test-impl-layer/src/main/java/com/infinera/metro/test/acceptance/layer1/killedboards/ManualApplyDeleteConfig.java

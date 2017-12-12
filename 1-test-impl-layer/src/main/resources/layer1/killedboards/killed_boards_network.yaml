@@ -1,0 +1,797 @@
+---
+nodeAccessDataMap:
+  nodeA:
+    ipAddress: "172.55.0.2"
+    port: 80
+    userName: "root"
+    password: "root"
+  nodeZ:
+    ipAddress: "172.55.0.3"
+    port: 80
+    userName: "root"
+    password: "root"
+nodeEquipmentMap:
+  nodeA: !<.NodeEquipment>
+    boards:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mxp8>
+      subrack: "subrack1"
+      slot: "slot2"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 1
+        receivePort: 2
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "1"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "stm1"
+      - transmitPort: 3
+        receivePort: 4
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 5
+        receivePort: 6
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 7
+        receivePort: 8
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 9
+        receivePort: 10
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 11
+        receivePort: 12
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 13
+        receivePort: 14
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "15"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "stm1"
+      - transmitPort: 15
+        receivePort: 16
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "16"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "stm1"
+      linePorts:
+      - transmitPort: 17
+        receivePort: 18
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "muxIfExpectedTxLambda"
+              value: "ch919"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mxp028>
+      subrack: "subrack1"
+      slot: "slot3"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 1
+        receivePort: 2
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "1"
+      - transmitPort: 3
+        receivePort: 4
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "5"
+      linePorts:
+      - transmitPort: 21
+        receivePort: 22
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "muxIfExpectedTxLambda"
+              value: "ch920"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Gxp2500Sfp>
+      subrack: "subrack1"
+      slot: "slot5"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts: []
+      linePorts:
+      - transmitPort: 21
+        receivePort: 22
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortConfigAttributes>
+          linePortConfigAttributes:
+            attributes:
+            - key: "selectTrafficCombination"
+              value: "fc2G yes"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "wdmIfExpectedTxLambda"
+              value: "ch923"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe>
+      subrack: "subrack1"
+      slot: "slot8"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 1
+        receivePort: 2
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "lan10GbE yes"
+      - transmitPort: 5
+        receivePort: 6
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "wan10GbE yes"
+      linePorts:
+      - transmitPort: 3
+        receivePort: 4
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "wdmIfExpectedTxLambda"
+              value: "ch926"
+      - transmitPort: 7
+        receivePort: 8
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "wdmIfExpectedTxLambda"
+              value: "ch927"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL>
+      subrack: "subrack1"
+      slot: "slot15"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts: []
+      linePorts: []
+  nodeZ: !<.NodeEquipment>
+    boards:
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mxp8>
+      subrack: "subrack1"
+      slot: "slot2"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 1
+        receivePort: 2
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "1"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "stm1"
+      - transmitPort: 3
+        receivePort: 4
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 5
+        receivePort: 6
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 7
+        receivePort: 8
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 9
+        receivePort: 10
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 11
+        receivePort: 12
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "0"
+      - transmitPort: 13
+        receivePort: 14
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "15"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "stm1"
+      - transmitPort: 15
+        receivePort: 16
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "16"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "stm1"
+      linePorts:
+      - transmitPort: 17
+        receivePort: 18
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "muxIfExpectedTxLambda"
+              value: "ch919"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mxp028>
+      subrack: "subrack1"
+      slot: "slot3"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 1
+        receivePort: 2
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "1"
+      - transmitPort: 3
+        receivePort: 4
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortSetAttributes>
+          clientPortSetAttributes:
+            attributes:
+            - key: "vc4"
+              value: "5"
+      linePorts:
+      - transmitPort: 21
+        receivePort: 22
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "muxIfExpectedTxLambda"
+              value: "ch920"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Gxp2500Sfp>
+      subrack: "subrack1"
+      slot: "slot5"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts: []
+      linePorts:
+      - transmitPort: 21
+        receivePort: 22
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortConfigAttributes>
+          linePortConfigAttributes:
+            attributes:
+            - key: "selectTrafficCombination"
+              value: "fc2G yes"
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "wdmIfExpectedTxLambda"
+              value: "ch923"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Tpd10gbe>
+      subrack: "subrack1"
+      slot: "slot8"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts:
+      - transmitPort: 1
+        receivePort: 2
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "lan10GbE yes"
+      - transmitPort: 5
+        receivePort: 6
+        clientPortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.client.ClientPortConfigAttributes>
+          ? clientPortConfigAttributes
+          : attributes:
+            - key: "configure"
+              value: "wan10GbE yes"
+      linePorts:
+      - transmitPort: 3
+        receivePort: 4
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "wdmIfExpectedTxLambda"
+              value: "ch926"
+      - transmitPort: 7
+        receivePort: 8
+        linePortAttributes:
+        - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.line.LinePortSetAttributes>
+          linePortSetAttributes:
+            attributes:
+            - key: "wdmIfExpectedTxLambda"
+              value: "ch927"
+    - !<com.infinera.metro.dnam.acceptance.test.node.configuration.board.Mdu40EvenL>
+      subrack: "subrack1"
+      slot: "slot15"
+      boardAttributes:
+      - !<com.infinera.metro.dnam.acceptance.test.node.configuration.attribute.board.BoardSetAttributes>
+        boardSetAttributes:
+          attributes:
+          - key: "adminStatus"
+            value: "up"
+      clientPorts: []
+      linePorts: []
+internalConnectionMap:
+  nodeA:
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot2"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 17
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 2
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 1
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot2"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 18
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot3"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 21
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 4
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 3
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot3"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 22
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot5"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 21
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 10
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 9
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot5"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 22
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot8"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 3
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 16
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 15
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot8"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 4
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot8"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 7
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 17
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 18
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot8"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 8
+  nodeZ:
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot2"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 17
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 2
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 1
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot2"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 18
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot3"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 21
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 4
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 3
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot3"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 22
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot5"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 21
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 10
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 9
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot5"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 22
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot8"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 3
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 16
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 15
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot8"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 4
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot8"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 7
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 17
+  - fromPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 18
+    toPeer:
+      subrack: "subrack1"
+      slot: "slot8"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 8
+peerConnectionMap:
+  nodeA_nodeZ:
+  - localPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 81
+    remotePeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 82
+  nodeZ_nodeA:
+  - localPeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 81
+    remotePeer:
+      subrack: "subrack1"
+      slot: "slot15"
+      mpoIdentifier:
+        xtmVersionEqualOrHigherThan27: true
+        mpoPort: 0
+        mtoIdentifier: ":0"
+      port: 82
