@@ -57,7 +57,7 @@ public class NetworkConnectionRestAssuredTest extends MetroManagementDslTest {
     @BeforeEach
     public void setup() throws InterruptedException, DockerException, DockerCertificateException {
 
-        log.info("######## Running test TopologyAcceptanceTest");
+        log.info("######## Running test NetworkConnectionRestAssuredTest");
 
         nodeApi.assertNodeNotAdded(node1);
         nodeApi.assertNodeNotAdded(node2);
